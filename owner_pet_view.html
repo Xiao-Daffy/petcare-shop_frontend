@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Pet</h2>
+		
+				<!-- PRODUCT LIST -->
+
+			<div class="container bootstrap snippets bootdey">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="main-box no-header clearfix">
+							<div class="main-box-body clearfix">
+								<div class="table-responsive">
+									<p></p>
+									<!-- <button type="button" class="btn btn-outline-danger" onclick="javascript:window.location.href='owner_service_add.html'">Add New Pet Service</button><p></p> -->
+									<table id="tableList" class="table user-list">
+										<thead>
+											<tr>
+											<th><span>ID</span></th> <!--Pet id-->
+											<th><span>Image</span></th>
+											<th><span>Owner Name</span></th>
+											<th><span>Age</span></th>
+											<th><span>Gender</span></th>
+											<th><span>Weight(g)</span></th>
+											<th><span>Length(cm)</span></th>
+											<th><span>Speciese</span></th>
+											<th><span>Full Vaccine</span></th><!--1: 可以预约 0: 下架-->
+
+											<th>Action</th> <!--Delete, Edit -->
+											<th>&nbsp;</th>
+										
+									
+											</tr>
+										</thead>
+										<tbody>
+
+											<!-- Start Loop:  List of Pet Service -->
+											<template v-for="pet, index in listPet">
+											<tr>
+												<td>{{pet.petId}}</td>
+												<td>
+													<!-- <img :src="service.serviceImg" alt=""> -->
+													<img :src="pet.petImg" alt="">
+												</td>
+										
+												<td>
+													<span class="label label-default">{{pet.ownerName}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{pet.age}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{pet.petGender}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{pet.petWeight}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{pet.petLength}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{pet.petSpeciese}}</span>
+												</td>
+												
+											
+												<td v-if="pet.fullVaccine == 1">
+													
+														<span class="fa-stack" style="background-color: rgb(113, 232, 34); width: 50%;">
+															
+															<span class="label label-default" style="color: white;  padding: 10%;">Yes</span>
+														</span>
+													
+													
+												</td>
+												<td v-else>
+													
+													<span class="fa-stack" style="background-color: rgb(232, 70, 34); width: 50%;">
+														
+														<span class="label label-default" style="color: white; padding: 17%;">No</span>
+													</span>
+												
+												</td>
+						
+												<td style="width: 17%;">
+												
+											 		<!-- Edit Button -->
+													<a :href="'owner_pet_edit.html?pid='+pet.petId" class="table-link text-info">
+														<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+														</span>
+													</a>
+
+													<!-- delete Button -->
+													<a href="#"  @click="doDelete(pet.petId)" class="table-link danger">
+														<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+														</span>
+													</a>
+												</td>
+												
+											</tr>
+										</template>
+										<!-- End Loop:  List of Pet Service -->
+
+										</tbody>
+									</table>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+				<!-- PRODUCT LIST -->
+				
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+
+
+	
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				
+				userId:"",
+				storeId:"",
+				token:"",
+				listPet:[],
+			},
+
+			created:function(){
+				this.isLogin = true;
+				
+				this.storeId = getUrlParam("sid");
+				
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				this.userId = getCookies("userId");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+				}
+				
+				// fecth a list of pet service 
+				var Url = baseUrl+"pet/list/"+this.storeId;
+				axios({
+					method:"get",
+					url:Url,
+					params:{
+						sid: this.storeId
+					}
+				}).then((res)=>{ 
+					
+					this.listPet = res.data.data
+					
+					console.log("ist of pet service: ",this.listPet );
+					
+				});
+
+			},
+			methods:{
+				
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+        		},
+
+				doDelete: function(pid){
+					console.log("delete id: ", pid)
+
+					
+					let doDelete = confirm("Are you sure to delete?");
+					if(doDelete){
+						//if confirm to delete
+					
+						var deleteUrl = baseUrl+"pet/delete/"+pid;
+						axios({
+							method:"delete",
+							url:deleteUrl,
+							params:{
+								pid: pid,
+							}
+							
+						}).then((res)=>{
+						vm.vo = res.data;
+						alert(vm.vo.msg);
+						window.location.reload(); //refresh page
+						})
+					
+					} else {
+						alert("Action canceled");
+					}
+					
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>

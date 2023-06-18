@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PetCare Shop</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+  <!-- Vendor CSS Files -->
+   <!-- Vendor CSS Files -->
+   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+
+  <!-- <link href="assets/css/order.css" rel="stylesheet"> -->
+
+  <!-- =======================================================
+  * Template Name: Reveal - v4.10.0
+  * Template URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+ 
+<style>
+
+.cheds{
+
+  /* font-weight: lighter; */
+  font-size: 15px;
+}
+</style>
+
+</head>
+
+<body>
+
+  <div id ="index1">
+
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
+          <a :href="'notification_view.html?uid='+userId" class="notification">
+          <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
+        <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span>
+      
+        <i class="d-flex align-items-center ms-4" v-if="isLogout"><a href="#" onclick="javascript:window.location.href='sign_up.html'">Register</a></i>
+        <i class="d-flex align-items-center ms-4" v-else><a @click="logoutRequest" >Logout</a></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <a :href="'store_open.html?uid='+userId">Free Open Store</a>
+
+      </div>
+    </div>
+  </section><!-- End Top Bar-->
+  
+     <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div id="logo">
+        <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto" href="petproduct.html">Pet Product</a></li>
+          <li><a class="nav-link scrollto" href="petservice.html">Pet Service</a></li>
+          <li><a class="nav-link scrollto " href="pet_onlinestore.html">Online Store</a></li>
+          <li v-if="isLogin" class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!-- <li><a href="profile.html">Profile</a></li> -->
+              <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+              <li><a :href="'address.html?uid='+userId">Address Book</a></li>
+              <li><a :href="'my_orderings.html?uid='+userId">Ordering</a></li>
+              <li><a :href="'reservation_view.html?uid='+userId">Reservation</a></li>
+              <li><a :href="'my_comments.html?uid='+userId">Order Reviews</a></li>
+            </ul>
+          </li>
+          <li v-else></li>
+          <li><a class="nav-link scrollto" href="shopping_cart.html"><i class="bi bi-cart4 " style="font-size: 26px;"></i></a></li>
+          
+          
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+  <!-- ======= hero Section ======= -->
+   <!-- ======= Breadcrumbs Section ======= -->
+   <section class="breadcrumbs">
+    <div class="container">
+
+
+    </div>
+  </section><!-- End Breadcrumbs Section -->
+
+
+  <main id="main">
+  
+
+    <!-- display the pet service randomly: such as by create_time, and can reserable  -->
+
+       <!-- ======= Breadcrumbs Section ======= -->
+       <section class="breadcrumbs">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Order Reviews</h2>
+            <ol>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="portfolio.html">Order Reviews</a></li>
+              <li>Review</li>
+            </ol>
+          </div>
+  
+        </div>
+      </section><!-- Breadcrumbs Section -->
+  
+      <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container-fluid">
+
+        <div class="container">
+          <!-- Title -->
+        
+          <!-- Main content -->
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- Details -->
+              <div class="card mb-4">
+                <div class="card-body">
+                 
+                  <table class="table table-borderless">
+                    <thead>
+                        
+                      <tr>
+                      <th><span>Product</span></th>
+                     
+                      <th  style="text-align: center;"><span>Price</span></th> <!--Main photo-->
+
+                      <th style="text-align: center;"><span>Comment</span></th>
+                    
+                      <th  style="text-align: center;"><span>Action</span></th>
+                      <th>&nbsp;</th>
+                      
+                    
+                  
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <template  v-for="cl, index in commentList">
+                      <tr style="border-bottom: solid 1px rgb(227, 227, 227);">
+                        <td style="width:23%;">
+                          <div class="d-flex mb-2">
+                            <div class="flex-shrink-0">
+                              <img src="https://www.bootdey.com/image/280x280/87CEFA/000000" alt="" width="50" class="img-fluid">
+                            </div>
+                            <div class="flex-lg-grow-1 ms-3">
+                              <span class="small"><i class="bi bi-shop"></i> {{cl.storeName}}</span><br>
+                              <h5 class="small mb-0">{{cl.productName}}</h5>
+                             
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="text-end" style="width: 5%;"><h5 class="small mb-0">CNY {{cl.totalAmount}}</h5></td>
+
+                        <td style="width:65%;">
+                          <div class="d-flex mb-2">
+                          
+                            <div class="flex-lg-grow-1 ms-3">
+                   
+                              <h5  class="cheds small mb-0" v-html="cl.content"></h5>
+                             
+                            </div>
+                          </div>
+                        </td>
+                        <td class="text-end"  style="width: 8%;">
+                          <!-- Edit Button -->
+						
+                          <a :href="'edit_comment.html?comid='+cl.commentId"><button style="font-size: 12px; background-color:#ffa3a3; border: none;" type="button" class="btn btn-success">Edit</button></a>
+
+
+                        </td>
+                      </tr>
+                      <br>
+                   </template>
+                    </tbody>
+            
+                  </table>
+                </div>
+              </div>
+          
+            </div>
+           
+          </div>
+ 
+
+        </div>
+    
+          </div>
+       
+    </section><!-- End Portfolio Details Section -->
+
+     
+  </main><!-- End #main -->
+</div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+      -->
+        Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Vendor JS Files -->
+
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
+  <!-- Template Main JS File -->
+
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.js"></script>
+  <script src="assets/js/cookie_utils.js"></script>
+  <script src="assets/js/util.js"></script>
+
+  <script src="assets/js/main.js"></script>
+  
+
+  <script>
+		const { createEditor, createToolbar } = window.wangEditor
+		
+		const editorConfig = {
+			placeholder: '',
+			onChange(editor) {
+			  const html = editor.getHtml()
+			  console.log('editor content', html)
+			  // 也可以同步到 <textarea>
+			}
+		}
+		
+		const editor = createEditor({
+			selector: '#editor-container',
+			html: '<p><br></p>',
+			config: editorConfig,
+			mode: 'default', // or 'simple'
+		})
+		
+		const toolbarConfig = {}
+		
+		const toolbar = createToolbar({
+			editor,
+			selector: '#toolbar-container',
+			config: toolbarConfig,
+			mode: 'default', // or 'simple'
+		})
+
+	
+				
+					
+		</script>
+
+
+  <script>
+  
+
+  var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+      el:"#index1",
+      data:{
+        
+        itemId:"",
+        token:"",
+        username:"",
+				userimg:"",
+        userId:"",
+				isLogin:false,
+        isLogout:false,
+        commentList:{},
+       
+      },
+      created: function(){
+    
+   
+        // get token, username from cookie
+        var token = getCookies("token");
+        this.itemId = getUrlParam("otmid");
+        // check user if login or not
+        if(token != null && token != ""){
+          this.isLogin= true;
+          this.username = getCookies("username");
+          this.token =getCookies("token");
+          this.userId = getCookies("userId");
+          console.log(this.userId)
+      
+        }else{
+          // else token is null, means user not login
+          this.isLogout=true;
+          var loginUrl = "sign_in.html"
+          window.location.href = encodeURI(loginUrl);
+        }
+
+        console.log("item id: ", this.itemId)
+
+         // get list of comment
+         var Url = baseUrl+"comment/get/"+this.userId;
+        console.log("url ", Url)
+        axios({
+							method:"get",
+							url:Url,
+              headers:{
+                token: this.token
+              },
+						}).then((res)=>{ 
+						//backend return ResultVO object
+							this.commentList = res.data.data
+							console.log("list comment : ",this.commentList);
+							
+				});
+
+      
+      },
+      methods:{
+
+        logoutRequest: function(){
+
+          // vm.isLogout = true;
+          // clear all cookies
+          deleteCookie();
+          console.log("this token: ", this.token)
+          window.location.href = "sign_in.html";
+        },
+
+ 
+      handleInput(event) {
+					vm.comment.content = event.target.innerHTML;
+
+			}
+      }
+   
+    })
+    
+
+  </script>
+</body>
+
+</html>

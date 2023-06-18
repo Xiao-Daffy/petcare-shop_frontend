@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Profile Details</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Reveal - v4.10.0
+  * Template URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  <div id="profileBlock">
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
+          <a :href="'notification_view.html?uid='+userId" class="notification">
+          <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{userInfo.username}}</span>
+        <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span>
+      
+       
+        <i class="d-flex align-items-center ms-4"><a  @click="logoutRequest"  >Logout</a></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <a href="#">Free Open Store</a>
+
+      </div>
+    </div>
+  </section><!-- End Top Bar-->
+  <!-- ======= Header ======= -->
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div id="logo">
+        <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto" href="petproduct.html">Pet Product</a></li>
+          <li><a class="nav-link scrollto" href="petservice.html">Pet Service</a></li>
+          <li><a class="nav-link scrollto " href="pet_onlinestore.html">Online Store</a></li>
+          <li v-if="isLogin" class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!-- <li><a href="profile.html">Profile</a></li> -->
+              <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+              <li><a :href="'address.html?uid='+userId">Address Book</a></li>
+              <li><a :href="'my_orderings.html?uid='+userId">Ordering</a></li>
+              <li><a :href="'reservation_view.html?uid='+userId">Reservation</a></li>
+              <li><a :href="'my_comments.html?uid='+userId">Order Reviews</a></li>
+            </ul>
+          </li>
+          <li v-else></li>
+          <li><a class="nav-link scrollto" href="shopping_cart.html"><i class="bi bi-cart4 " style="font-size: 26px;"></i></a></li>
+          
+          
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Pofile Editing</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="portfolio.html">My Account</a></li>
+            <li>Profile Details</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- Breadcrumbs Section -->
+
+    <!-- ======= Profile  Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3">
+            <div class="portfolio-details-slider swiper">
+              <div class=" align-items-center">
+
+                <div class="swiper-slide">
+                  <img :src="user.userImg" alt="">
+                  <p></p>
+                  <form>
+                  <!-- <input type="file" class="form-control"  id="customFile"/> -->
+                  <input type="file" id="file" @change="fileUpload($event)" >
+
+                  <!-- <input type="file"  class="form-control" accept="image/*"  ref="file"  @change="selectImage" /> -->
+                </div>
+
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="col-lg-9">
+            <div class="portfolio-info">
+              <h3>Personal Information</h3>
+              
+                <!-- Receiver Name input -->
+                <span :style="colorStyle" id="tips">{{tips}}</span>
+                <p></p>
+                <div class="form-outline mb-4">
+                  
+                  <strong>First Name</strong>: <input type="text" v-model="user.firstname"  class="form-control"  size="40" :placeholder="userInfo.firstname"  @keyup="checkInfo"/>
+                 
+                </div>
+              
+                <!-- Phone.No input -->
+                <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Last Name</strong>: <input type="text" v-model="user.lastname" class="form-control" :placeholder="userInfo.lastname"  @keyup="checkInfo"/>
+                  
+                </div>
+  
+                 <!-- State input -->
+                 <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Username</strong>: <input type="text" v-model="user.username" class="form-control" :placeholder="userInfo.username" @keyup="checkInfo"/>
+                  
+                </div>
+  
+              
+                <!-- Post Code Detail input -->
+                <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Phone</strong>: <input type="text" v-model="user.phone" class="form-control" :placeholder="userInfo.phone" @keyup="checkInfo"/>
+                  
+                </div>
+              
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4 ">
+                  <!-- Submit button -->
+                  <div>
+                    <button type="button" @click="doSave" style="background-color: #F5BDBD;" class="btn btn-block mb-4 align-items-center ">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+        <p></p><p></p>
+        <div class="row">
+          
+          <div class="col-lg-10">
+            <div class="portfolio-info">
+            <h3>Email Address</h3>
+            
+              This is email you used for PetCare Shop Registration.
+              <p></p>
+            <ul>
+              <li><strong>Email: daffy@gmail.com</strong></li>
+              
+              
+            </ul>
+            </div>
+          </div>
+
+          
+        </div>
+       
+      </div>
+    </section><!-- End Profile Form Section -->
+
+  </main><!-- End #main -->
+</div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+      -->
+        Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.js"></script>
+  <script src="assets/js/cookie_utils.js"></script>
+  <script src="assets/js/util.js"></script>
+
+  <script>
+    var baseUrl = "http://localhost:8080/";
+
+    var vm = new Vue({
+      el:"#profileBlock",
+
+      data:{
+        userId:"",
+        token:"",
+        userInfo:{},
+        isLogin:false,
+        user:{
+          userId:"",
+          firstname:"",
+					lastname:"",
+					username:"",
+          birthday:null,
+          phone:null,
+          userImg:""
+        },
+        tips:"",
+        colorStyle:"",
+        isRight:false,
+        file:{},
+        formData:null,
+      },
+
+      created:function(){
+
+        this.userId = getUrlParam("uid");
+        this.user.userId = this.userId;
+        var profileUrl = baseUrl+"user/profile/"+this.userId;
+        console.log(this.userId);
+        console.log(profileUrl)
+        // get user information from backend
+
+        //1. check user whether login in, if not, ask login and then after back to profile/{id} page
+        this.token =getCookies("token");
+        console.log("token: ", this.token)
+        if(this.token !=null  && this.token!=""){
+          this.isLogin = true;
+        }
+        // get user info from backend
+        axios.get(profileUrl,).then((res)=>{
+          this.userInfo = res.data.data;
+       
+          console.log(this.userInfo);
+        });
+      },
+      methods:{
+        logoutRequest: function(){
+
+          // vm.isLogout = true;
+          // clear all cookies
+          deleteCookie();
+          window.location.href = "sign_in.html";
+        },
+
+        // save the changed profile
+        doSave: function(){
+          vm.isRight=true;
+          if(vm.isRight){ // if input all validated
+            console.log("check.............")
+            var resetUrl = baseUrl+"user/edit/"+vm.userId;
+            var imageUrl = baseUrl+"user/azureupload";
+
+            // image upload
+
+            axios({
+            method:"put",
+            contentType: "multipart/form-data; charset=utf-8",
+            url:imageUrl,
+            data: vm.formData
+          }).then((res)=>{
+            
+            // get the img url, and store into database
+            vm.user.userImg =  res.data.data;
+            console.log("img url: ", res.data.data[0])
+            axios({
+              method:"put",
+              url:resetUrl,
+              data:vm.user
+            }).then((res)=>{ 
+              var vo = res.data;//backend return ResultVO object
+              console.log(vm.user.password);
+              console.log("after change: ",vo);
+              var loginUrl = "profile.html?uid="+vm.userId;
+              window.location.href= encodeURI(loginUrl);
+            });
+
+          })
+
+          }
+        },
+        fileUpload: function(){
+
+          if (!/image\/\w+/.test(event.target.files[0].type)) {
+          // 提示只能是图片，return
+            alert("Only Picture");
+            return;
+	        } 
+          vm.file = event.target.files[0];
+          vm.formData = new FormData();
+          vm.formData.append('file', vm.file);
+          
+        },
+
+        /*
+            Input Validation
+        */
+
+        checkInfo: function(){
+
+          // // First name and last name cannot be number
+          
+          // if(/[0-9]/.test(vm.user.firstname)){ // if contain number, retur true
+
+          //   vm.tips="Firstname contains only letters!";
+          //   vm.colorStyle="color:red";
+					// 	vm.isRight = false;
+          // }else if(/[0-9]/.test(vm.user.lastname)){ // if contain, retur true
+
+          //   vm.tips="Lastname contains only letters!";
+          //   vm.colorStyle="color:red";
+					// 	vm.isRight = false;
+          // }else if(!(/[0-9]/.test(vm.user.phone))){ //if contain strings
+          //   vm.tips="Phone contains only numbers!";
+          //   vm.colorStyle="color:red";
+					// 	vm.isRight = false;
+          // }else{
+          //   vm.isRight=true;
+          // }
+          
+        }
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Add New Address</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Reveal - v4.10.0
+  * Template URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <div id="block">
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
+          <a :href="'notification_view.html?uid='+userId" class="notification">
+          <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
+        <!-- <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span> -->
+      
+       
+        <i class="d-flex align-items-center ms-4"><a  @click="logoutRequest"  >Logout</a></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <a href="#">Free Open Store</a>
+
+      </div>
+    </div>
+  </section><!-- End Top Bar-->
+  <!-- ======= Header ======= -->
+ <!-- ======= Header ======= -->
+ <header id="header" class="d-flex align-items-center">
+  <div class="container d-flex justify-content-between">
+
+    <div id="logo">
+      <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+    </div>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <li><a class="nav-link scrollto" href="#about">Pet Product</a></li>
+        <li><a class="nav-link scrollto" href="#services">Pet Service</a></li>
+        <li><a class="nav-link scrollto " href="#portfolio">Online Store</a></li>
+        <li class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+            <li><a href="#">Address Book</a></li>
+            <li><a href="#">Ordering</a></li>
+            <li><a href="#">Reservation</a></li>
+            
+          </ul>
+        </li>
+        <li><a class="nav-link scrollto" href="#team"><i class="bi bi-cart4 " style="font-size: 25px;"></i></a></li>
+        
+        
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+  </div>
+</header><!-- End Header -->
+  <main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Add New Address</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="portfolio.html">My Account</a></li>
+            <li>Address Book</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- Breadcrumbs Section -->
+
+    <!-- ======= Profile  Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          
+
+          <div class="col-lg-9">
+            <div class="portfolio-info">
+              <h3>Add New Address</h3>
+              
+              <span :style="colorStyle" id="tips">{{tips}}</span>
+                <p></p>
+               
+                <div class="form-outline mb-4">
+                  
+                  <strong>Receiver Name</strong>: *<input type="text" v-model="addre.receiverName"  class="form-control"  size="40" placeholder="Zhang Meng" required @keyup="checkInfo"/>
+                 
+                </div>
+              
+             
+                <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Receiver Mobile</strong>: *<input type="text" v-model="addre.receiverMobile" class="form-control" placeholder="15898761021" required @keyup="checkInfo"/>
+                  
+                </div>
+  
+                 <!-- State input -->
+                 <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Province</strong>: *<input type="text" v-model="addre.state" class="form-control" placeholder="JiangXi" required @keyup="checkInfo"/>
+                  
+                </div>
+  
+              
+                <!-- Post Code Detail input -->
+                <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>City</strong>: *<input type="text" v-model="addre.city" class="form-control" class="form-control" placeholder="Shangrao" required @keyup="checkInfo"/>
+                  
+                </div>
+              
+                <!-- Post Code Detail input -->
+                <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Addess Details</strong>: *<input type="text" v-model="addre.address" class="form-control" placeholder="No109, Buidling 1, Xingan Family, Yugan County" required @keyup="checkInfo"/>
+                  
+                </div>
+
+                <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+               
+                  <strong>Postcode</strong>: *<input type="text" v-model="addre.postCode" class="form-control" placeholder="314000" required @keyup="checkInfo"/>
+                  
+                </div>
+                
+                  <input type="checkbox" id="checkBox"  @click="setDefault = !setDefault"> Default Address </input>
+                  <p></p>
+            
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4 ">
+                  <!-- Submit button -->
+                  <div>
+                    <button type="button" @click="doSave" style="background-color: #F5BDBD;" class="btn btn-block mb-4 align-items-center ">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </section><!-- End Profile Form Section -->
+
+  </main><!-- End #main -->
+</div>
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+      -->
+        Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.js"></script>
+  <script src="assets/js/cookie_utils.js"></script>
+  <script src="assets/js/util.js"></script>
+
+  <script>
+    var baseUrl = "http://localhost:8080/";
+     
+ 
+    var vm = new Vue({
+      
+      el: "#block",
+      data:{
+      
+        addre:{
+          userId:0,
+          receiverName:"",
+          receiverMobile:"",
+          state:"",
+          city:"",
+          address:"",
+          postCode:"",
+          defaultAddr: 0,
+        },
+        setDefault:false,
+        userId:"",
+        username:"",
+        isRight:false,
+        token:"",s
+      }, 
+      created: function(){
+        this.userId = getCookies("userId");
+        this.username =getCookies("username");
+      },
+      methods:{
+        
+        doSave: function(){
+          if(vm.isRight){
+            vm.addre.userId = parseInt(vm.userId);
+            if(vm.setDefault == true){
+              vm.addre.defaultAddr = 1;
+            }
+            // ajax request to add address
+
+            var addUrl = baseUrl+"user/address/add";
+            axios(
+              {
+                method:"post",
+                url:addUrl,
+                data:vm.addre
+              }
+            ).then((res)=>{
+              console.log("result vo: ", res.data);
+              var addrUrl = "address.html?uid="+vm.userId;
+              window.location.href= encodeURI(addrUrl); // back to address book page
+
+            })
+          }
+        },
+
+        // input validation
+        checkInfo: function(){
+          
+          if(!(/[0-9]/.test(vm.addre.receiverMobile))){
+            vm.tips="Phone contains only numbers!";
+            vm.colorStyle="color:red";
+						vm.isRight = false;
+          }else if(vm.addre.receiverMobile.length !=11){
+            vm.tips="The number of phone only 11 !";
+            vm.colorStyle="color:red";
+						vm.isRight = false;
+          }else if(/[0-9]/.test(vm.addre.state)){
+            vm.tips="Province contains only letters!";
+            vm.colorStyle="color:red";
+						vm.isRight = false;
+          }else if(/[0-9]/.test(vm.addre.city)){
+            vm.tips="City contains only letters!";
+            vm.colorStyle="color:red";
+						vm.isRight = false;
+          }else if(vm.addre.postCode.length !=6 ||vm.addre.postCode.length !=5 ){
+            vm.tips="Post code only with length 5 or 6";
+            vm.colorStyle="color:red";
+						vm.isRight = false;
+          }else{
+            vm.isRight=true;
+          }
+        },
+        logoutRequest: function(){
+
+          // vm.isLogout = true;
+          // clear all cookies
+          deleteCookie();
+          window.location.href = "sign_in.html";
+        }
+       
+      }
+    })
+    
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+</head>
+
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<!-- <div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div> -->
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Reservation List</h2>
+		
+				<!-- PRODUCT LIST -->
+
+			<div class="container bootstrap snippets bootdey">
+				<div class="row">
+
+					<div class="col-lg-4">
+					
+						<div class="input-group mt-2">
+						
+							<input id="myInput" type="text" class="form-control form-input" placeholder="Search anything...">
+							
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="main-box no-header clearfix">
+							<div class="main-box-body clearfix">
+								<div class="table-responsive">
+
+									<p id="btt"></p>
+									
+									<table id="tableList" class="table user-list">
+										<thead>
+											<tr>
+											<th><span>ID</span></th>
+											<th><span>Service Name</span></th>
+											<th><span>Reserver Name</span></th>
+											<th><span>Reserver Phone</span></th>
+											<th><span>No.of Pets</span></th>
+											<th><span>Service Price</span></th> <!--price per pet-->
+											<th><span>Total Amount</span></th>
+											<th><span>Reserve Data</span></th>
+											<th><span>Reserve Time</span></th>
+											<th><span>Reserver Status</span></th><!--1: 可以预约 0: 下架-->
+											
+											<th>Action</th> <!--Confirm, Close -->
+											
+											<th>&nbsp;</th>
+											<th>Document Pet</th> <!--Delete, Edit -->
+											
+										
+									
+											</tr>
+										</thead>
+										<tbody>
+
+											<!-- Start Loop:  List of Pet Service -->
+											<template v-for="re, index in listReservation">
+											<tr>
+												<td><span class="label label-default">{{re.reserveId}}</span></td>
+												<td>
+													<!-- <img :src="service.serviceImg" alt=""> -->
+													<span class="label label-default">{{re.serviceName}}</span>
+												</td>
+										
+												<td>
+													<span class="label label-default">{{re.reserverName}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{re.reserverPhone}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{re.numOfPet}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{re.price}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{re.totalAmount}}</span>
+												</td>
+												<td>
+													<span class="label label-default" >{{re.checkInDate}}</span>
+												</td>
+												<td>
+													<span class="label label-default" >{{re.checkInTime}}</span>
+												</td>
+												
+
+												<!-- Status  -->
+												<td v-if="re.reserveStatus == 'Pending'">
+													
+														<span class="fa-stack" style="background-color: yellow; width: 100%;">
+															
+															<span class="label label-default" style="color:black;  padding: 10%;">Pending</span>
+														</span>
+													
+													
+												</td>
+												<td v-else-if="re.reserveStatus=='Confirmed'">
+													
+													<span class="fa-stack" style="background-color: blue; width: 100%;">
+														
+														<span class="label label-default" style="color: white; padding: 10%;">Confirmed</span>
+													</span>
+												
+												</td>
+												<td v-else-if="re.reserveStatus=='Rejected'">
+													
+													<span class="fa-stack" style="background-color: gray; width:100%;">
+														
+														<span class="label label-default" style="color: white; padding: 10%;">Rejected</span>
+													</span>
+												
+												</td>
+												<td v-else-if="re.reserveStatus=='Canceled'">
+													
+													<span class="fa-stack" style="background-color: red; width: 100%;">
+														
+														<span class="label label-default" style="color: white; padding:10%;">Canceled</span>
+													</span>
+												
+												</td>
+												<td v-else-if="re.reserveStatus=='Completed'">
+													
+													<span class="fa-stack" style="background-color: green; width:100%;">
+														
+														<span class="label label-default" style="color: white; padding: 10%;">Completed</span>
+													</span>
+												
+												</td>
+												<!-- Status  -->
+
+												<!-- Approve/Reject/Close buttons -->
+												<td style="width: 15%;" v-if="re.reserveStatus == 'Pending'">
+													
+											 		<!-- Edit Button -->
+													
+														
+															<button style="font-size: 12px;" type="button" class="btn btn-success"  @click="doApprove(re.reserveId, re)">Approve</button>
+															<button  style="font-size: 12px;" type="button" class="btn btn-secondary" @click="doReject(re.reserveId, re)">Reject</button>
+														
+													
+
+												
+												</td>
+												
+												<td style="width: 15%;" v-else-if="re.reserveStatus=='Confirmed'">
+													
+													<a href="#"   class="table-link danger">
+														<button style="font-size: 12px;" type="button" class="btn btn-danger" @click="doClose(re.reserveId)">Finish</button>
+													</a>
+													
+												</td>
+
+												<td style="width: 15%;" v-else-if="re.reserveStatus=='Completed'">
+													&nbsp;
+													
+												</td>
+												<td style="width: 15%;" v-else-if="re.reserveStatus=='Rejected'">
+													&nbsp;
+													
+												</td>
+												<td>
+													&nbsp;
+												</td>
+												<td >
+													<a :href="'owner_pet_add.html?oid='+re.userId+'&rid='+re.reserveId" class="table-link text-info">
+														<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+														</span>
+													</a>
+													<a class="table-link text-info"  v-if="re.isDocument ==1">
+														<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x" style="color: green;"></i>
+															<i class="fa fa-check fa-stack-1x fa-inverse"></i>
+														</span>
+													</a>
+												</td>
+											</tr>
+										</template>
+										<!-- End Loop:  List of Pet Service -->
+
+										</tbody>
+									</table>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+				<!-- PRODUCT LIST -->
+				
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		  $("#myInput").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#tableList tr").filter(function() {
+			  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		  });
+		});
+		</script>
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				storeInfo:{},
+				userId:"",
+				storeId:"",
+				token:"",
+				listReservation:[],
+				notification:{
+					title:"",
+					content:"",
+					sendFrom:0,
+					sendTo:0,
+					receiveStore:0,
+          			receiveUser:0
+				},
+			},
+
+			created:function(){
+				this.isLogin = true;
+				
+				this.storeId = getUrlParam("sid");
+				
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				this.userId=getCookies("userId");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+				}
+
+				// fecth a list of pet service 
+				var Url = baseUrl+"reservation/list/owner/"+this.storeId;
+				axios({
+					method:"get",
+					url:Url,
+					params:{
+						sid: this.storeId
+					}
+				}).then((res)=>{ 
+					
+					this.listReservation = res.data.data
+					
+					console.log("List of pet service: ",this.listReservation );
+					
+				});
+
+			},
+			methods:{
+				
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+        		},
+
+			
+
+				doApprove: function(rid, reserve){
+
+					console.log("do approve........", rid)
+					// update the notification
+					vm.notification.title = "Approved Reservation"
+					vm.notification.content ="Pet Service: "+ reserve.serviceName+"<br>Check In Date: "+ reserve.checkInDate +"<br>Check In Time: "+ reserve.checkInTime;
+					vm.notification.sentFrom = parseInt(vm.storeId);
+					vm.notification.sendTo = reserve.userId;
+					vm.notification.receiveUser = reserve.userId;
+					console.log(vm.notification)
+					var Url = baseUrl+"reservation/approve/"+rid;
+					let doApprove = confirm("Are you sure to Approve Reservation?");
+					if(doApprove){
+						axios({
+							method:"put",
+							url:Url,
+							params:{
+								rid: rid,
+							}
+							
+						}).then((res)=>{
+							vm.vo = res.data;
+							 // make notification
+							 var urll = baseUrl+"notify/add";
+
+							axios({
+							method:"post",
+							url:urll,
+							data: vm.notification
+							
+							}).then((res)=>{ 
+	
+								alert(vm.vo.msg);
+								window.location.reload(); //refresh page
+							});
+						
+						})
+
+					
+					}else{
+						alert("Action canceled");
+					}
+				},
+
+				doReject: function(rid, reserve){
+					console.log("do reject........", rid)
+					// update the notification
+					vm.notification.title = "Rejected Reservation"
+					vm.notification.content ="Pet Service: "+ reserve.serviceName+"<br>Check In Date: "+ reserve.checkInDate +"<br>Check In Time: "+ reserve.checkInTime;
+					vm.notification.sentFrom = parseInt(vm.storeId);
+					vm.notification.sendTo = reserve.userId;
+					vm.notification.receiveUser = reserve.userId;
+			
+					var Url = baseUrl+"reservation/reject/"+rid;
+					let doApprove = confirm("Are you sure to Reject Reservation?");
+					if(doApprove){
+						axios({
+							method:"put",
+							url:Url,
+							params:{
+								rid: rid,
+							}
+							
+						}).then((res)=>{
+							vm.vo = res.data;
+							 // make notification
+							 var urll = baseUrl+"notify/add";
+
+							axios({
+							method:"post",
+							url:urll,
+							data: vm.notification
+							
+							}).then((res)=>{ 
+	
+								alert(vm.vo.msg);
+								window.location.reload(); //refresh page
+							});
+						
+						})
+
+					
+					}else{
+						alert("Action canceled");
+					}
+
+					// push notification for reject reservation
+
+				},
+
+				doClose(rid){
+
+					
+					let doCheck = confirm("Do you need to change total amount for this reservation?");
+					if(doCheck){
+						var number = prompt("Please enter a number:");
+						// Convert the input to a numeric value
+						number = parseFloat(number);
+
+						// Check if the input is a valid number
+						if (!isNaN(number)) {
+							// change the total amount
+							var Url1 = baseUrl+"reservation/edit/"+rid;
+							let dosub = confirm("Total amount is: " + number +"!\n\nAre you sure to Complete Reservation?");
+							if(dosub){
+							axios({
+								method:"put",
+								url:Url1,
+								params:{
+									total: number,
+								}
+								
+							}).then((res)=>{
+								vm.vo = res.data;
+								alert(vm.vo.msg);
+								window.location.reload(); //refresh page
+							})
+							}else{
+								alert("Action canceled");
+							}
+						} else {
+							alert("Invalid input. Please enter a valid number.");
+						}
+						
+					}else{
+						// no need to update the total amount
+						var Url = baseUrl+"reservation/close/"+rid;
+						let doClose  = confirm("Are you sure to Complete Reservation?");
+						if(doClose){
+							axios({
+									method:"put",
+									url:Url,
+									params:{
+										rid: rid,
+									}
+									
+								}).then((res)=>{
+									vm.vo = res.data;
+									alert(vm.vo.msg);
+									window.location.reload(); //refresh page
+								})
+						}else{
+							alert("Action canceled");
+						}
+					}
+					
+				
+				},
+			}
+		})
+
+	</script>
+</body>
+</html>

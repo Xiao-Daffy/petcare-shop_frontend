@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Orderings</h2>
+		
+				<!-- PRODUCT LIST -->
+				<p></p>
+			<div class="container bootstrap snippets bootdey">
+				
+				<div class="row">
+					<div class="col-lg-4">
+						
+						<div class="input-group mt-2">
+						
+							<input id="myInput" type="text" class="form-control form-input" placeholder="Search anything...">
+							<!-- <span style="margin-right: 20px;" ><i class="bi bi-search"></i></span> -->
+						</div>
+						<div class="col-lg-1 col-md-3 col-sm-12 p-0">
+							<button type="submit" class="btn btn-base">
+							</button>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="main-box no-header clearfix">
+							<div class="main-box-body clearfix">
+								<div class="table-responsive">
+									
+									<p id="btt"></p>
+									
+									<table id="tableList" class="table user-list">
+										<thead>
+											<tr>
+											<th style="width: 10%;"><span>Order ID</span></th>
+											<th><span>Images</span></th> <!--Main photo-->
+											<th><span>Product Name</span></th>
+										
+											<th><span>Bought Number</span></th>	
+											<th><span>Total Paid</span></th>
+											<th><span>Payment Method</span></th>
+											<th style="width: 25%;"><span>Receiver Info</span></th>
+											
+											<th><span>Status</span></th> <!-- 0: cannot buy yet, 1: buyable-->
+											
+											<th>Ship Number</th>
+										
+											<th>Action</th> <!--Delete, Edit, view -->
+											<th>View</th> <!--Delete, Edit, view -->
+											
+											</tr>
+										</thead>
+										<tbody>
+
+											<!-- Start Loop:  List of Pet Service -->
+											<template v-for="lo, index in listOrder">
+											<tr>
+												<td style="font-size: 14px;">
+													<span class="label label-default">
+														{{lo.orderId}}
+													</span>
+												</td>
+												<td>
+													<!-- <img :src="service.serviceImg" alt=""> -->
+													<img src="assets/img/cat1.jpg" alt=""> <!--Main photo-->
+												</td>
+										
+												<td>
+													<span class="label label-default">{{lo.productName}}</span>
+												</td>
+											
+												<td>
+													<span class="label label-default">{{lo.buyCounts}}</span>
+												</td>
+												<td>
+													<span class="label label-default" >{{lo.actualAmount}}</span>
+												</td>
+												<td>
+													<span class="label label-default" >{{lo.paymentMethod}}</span>
+												</td>
+												<td>
+													<span class="label label-default">
+														Name: {{lo.receiverName}}<br>
+														Phone: {{lo.receiverMobile}}<br>
+														Address:  {{lo.receiverAddress}}
+													</span>
+												</td>
+
+												<!-- Status -->
+												<template  v-if="lo.orderStatus == 'To Pay'"  >
+												<td style="width: 13%;">
+													
+														<span class="fa-stack bg-warning" style=" width:100%;">
+															
+															<span class="label label-default" style="color: white;  padding: 8%;">Pending</span>
+														</span>
+													
+													
+												</td>
+												<td></td>
+											</template>
+
+											<template  v-else-if="lo.orderStatus == 'To Ship'">
+												<td>
+													
+													<span class="fa-stack" style="background-color:rgb(20, 191, 225);  width:100%;">
+														
+														<span class="label label-default" style="color: white; padding: 8%;">To Ship</span>
+													</span>
+												
+												</td>
+												
+												<td></td>
+											</template>
+											<template  v-else-if="lo.orderStatus == 'To Receive'">
+												<td>
+													
+													<span class="fa-stack" style="background-color:rgb(76, 127, 222);  width:100%;">
+														
+														<span class="label label-default" style="color: white; padding: 8%;">Shipping</span>
+													</span>
+												
+												</td>
+												
+												<td style="width:100px;">
+												
+													{{lo.shipNumber}}
+												
+												</td>
+											</template>
+											<template  v-else-if="lo.orderStatus == 'To Comment'">
+												<td>
+													
+													<span class="fa-stack" style="background-color:rgb(222, 76, 154);  width:100%;">
+														
+														<span class="label label-default" style="color: white; padding: 8%;">Comment</span>
+													</span>
+												
+												</td>
+												
+												<td style="width:100px;">
+												
+													{{lo.shipNumber}}
+												
+												</td>
+											</template>
+											<template  v-else-if="lo.orderStatus == 'Canceled'">
+												<td>
+													
+													<span class="fa-stack" style="background-color:grey; width:100%;">
+														
+														<span class="label label-default" style="color: white; padding: 8%;">Canceled</span>
+													</span>
+												
+												</td>
+												
+												<td></td>
+											</template>
+											<template  v-else-if="lo.orderStatus == 'Commented'">
+												<td>
+													
+													<span class="fa-stack" style="background-color:grey;  width:100px;">
+														
+														<span class="label label-default" style="color: white; padding: 8%;">Commented</span>
+													</span>
+												
+												</td>
+												
+												<td style="width:100px;">{{lo.shipNumber}}</td>
+											</template>
+											<template  v-else-if="lo.orderStatus == 'Completed'">
+												<td>
+													
+													<span class="fa-stack" style="background-color:green; width:110%;">
+														
+														<span class="label label-default" style="color: white; padding: 8%;">Completed</span>
+													</span>
+												
+												</td>
+												
+												<td>{{lo.shipNumber}}</td>
+											</template>
+												
+												<td style="width: 15%;">
+													<a class="table-link danger" v-if="lo.orderStatus=='To Ship'">
+														<button style="font-size: 12px;" type="button" class="btn btn-danger"  @click="addshipNumber(lo.orderId,lo.itemId, lo)">ShipOut</button>
+													</a>
+													<!-- <a class="table-link  text-info" v-if="lo.orderStatus=='To Ship'" @click="addshipNumber(lo.orderId,lo.itemId)">
+														<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa fa-check  fa-stack-1x fa-inverse"></i>
+														</span>
+													</a>&nbsp;&nbsp; -->
+													
+												</td>
+												<td>
+													<a :href="'owner_order_detail.html?otmid='+lo.itemId" class="table-link  text-warning">
+														<span class="fa-stack">
+															<i class="fa fa-square fa-stack-2x"></i>
+															<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+														</span>
+													</a>
+												</td>
+											</tr>
+											
+										</template>
+										<!-- End Loop:  List of Pet Service -->
+
+										</tbody>
+									</table>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+				<!-- PRODUCT LIST -->
+				
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		  $("#myInput").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#tableList tr").filter(function() {
+			  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		  });
+		});
+		</script>
+	
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+			
+				userId:"",
+				storeId:"",
+				token:"",
+				listPetProduct:[],
+				listOrder:[],
+				ship:{
+					orderId:"",
+					orderItemId:"",
+					shipNumber:""
+				},
+				notification:{
+					title:"",
+					content:"",
+					sentFrom:0,
+					sendTo: 0,
+					receiveStore:0,
+         			 receiveUser:0
+				}
+
+			},
+
+			created:function(){
+				this.isLogin = true;
+				
+				this.storeId = getUrlParam("sid");
+				
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.userId=getCookies("userId");
+					this.isLogin = true;
+				}
+
+				// fecth a list of pet service 
+				var Url = baseUrl+"order/all/"+this.storeId;
+				axios({
+					method:"get",
+					url:Url,
+					headers:{
+						token: this.token
+					},
+				}).then((res)=>{ 
+					
+					this.listOrder = res.data.data
+					
+					console.log("list of pet service: ",this.listOrder );
+					
+				});
+
+			},
+			methods:{
+				
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+        		},
+				addshipNumber: function(oid, otmid, orderIo){
+					vm.ship.orderId = oid;
+					vm.ship.orderItemId =otmid;
+					console.log("ship: ", vm.ship);
+
+					
+					var number = prompt("Please enter ship number:");
+				
+						// Convert the input to a numeric value
+					if(number){
+						vm.ship.shipNumber = number;
+						let yes = confirm("Are you sure to confirm ship number?");
+						if(yes){
+							var Url = baseUrl+"ship/add";
+							axios({
+								method:"post",
+								url:Url,
+								data: vm.ship
+							}).then((res)=>{ 
+
+								// push notification
+								vm.notification.title="Order Has Been Shipped Out!";
+								vm.notification.content="Order Id: "+oid+"<br>Ship Number: "+ number
+								vm.notification.sentFrom= parseInt(vm.storeId);
+								vm.notification.sendTo = orderIo.userId;
+								vm.notification.receiveUser = orderIo.userId;
+								var urll = baseUrl+"notify/add";
+
+								axios({
+								method:"post",
+								url:urll,
+								data: vm.notification
+								
+								}).then((res)=>{ 
+
+									window.location.reload(); //refresh page
+
+								});
+								
+								
+							});
+						}else{
+							alert("Action canceled");
+						}
+					
+					}else{
+						alert("Action canceled");
+					}
+					
+
+					
+
+
+				
+
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>

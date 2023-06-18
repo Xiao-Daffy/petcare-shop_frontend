@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Pet</h2>
+		
+				 <!-- ======= Profile  Section ======= -->
+				 <section id="portfolio-details" class="portfolio-details">
+					<div class="container">
+			  
+					  <div class="row gy-4">
+			  
+						
+			  
+						<div class="col-lg-9">
+						  <div class="portfolio-info">
+							<h3>Edit Pet Information</h3>
+							
+							
+							<!-- <span :style="colorStyle" id="tips">{{tips}}</span> -->
+							<p></p>
+							  <div class="form-outline mb-4">
+								
+								<strong>Pet Age</strong>: *<input type="text" v-model="pet.age" class="form-control"  size="40" :placeholder="petInfo.age"/>
+							   
+							  </div>
+							
+						   
+							
+				
+							   <!-- State input -->
+							  
+							
+							  <!-- Post Code Detail input -->
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Weight(G)</strong>: <input type="text" v-model="pet.petWeight" class="form-control" :placeholder="petInfo.petWeight"  />
+								
+							  </div>
+							
+							  <!-- Post Code Detail input -->
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Pet Length(CM)</strong>: <input type="text"  v-model="pet.petLength" class="form-control" :placeholder="petInfo.petLength" />
+								
+							  </div>
+							 
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Full Vaccine</strong>:  &nbsp; &nbsp;
+								<select name="cars" id="cars" v-model="selected" @change="selectStatus">
+									<!-- <select class="form-control" v-model="selected" :required @change="changeLocation"></select> -->
+									<option value="1">Yes</option>
+									<option value="0">No</option>
+								
+								</select>
+								
+							  </div>
+
+							  <p></p><p></p>
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+				   
+								<strong>Pet Service Photo</strong>: <p></p>
+								<img :src="petInfo.petImg" alt=""><p></p>
+								<input type="file" id="file" @change="fileUpload($event)" >
+								
+							  </div>
+						<p></p>
+								
+							  <!-- 2 column grid layout for inline styling -->
+							  <div class="row mb-4 ">
+								<!-- Submit button -->
+								<div>
+								  <button type="button"  @click="doSave" style="background-color: #F5BDBD;" class="btn btn-block mb-4 align-items-center ">Save</button>
+								</div>
+							  </div>
+							</form>
+						  </div>
+			  
+						</div>
+			  
+					  </div>
+			  
+			  
+					</div>
+				  </section><!-- End Profile Form Section -->
+	
+
+
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+
+
+	
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				petInfo:{},
+				storeId:"",
+				userId:"",
+				petId:"",
+				token:"",
+				pet:{
+					petId:0,
+					age:"",
+					
+					petWeight:"",
+					petLength:"",
+			
+					petImg:"",
+					fullVaccine:2,
+					
+				},
+				selected:"",// option for pet full Vaccine status
+				
+			
+				file:{},
+        		formData:null,
+			},
+
+			created:function(){
+				this.isLogin = true;
+				
+				this.petId = getUrlParam("pid");
+				
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				this.storeId =getCookies("storeId");
+				this.userId = getCookies("userId");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+				}
+
+				
+				// get single pet service
+				var Url = baseUrl+"pet/get/"+this.petId
+				axios.get(Url,).then((res)=>{
+					this.petInfo = res.data.data;
+					this.pet.fullVaccine = this.petInfo.fullVaccine;
+					
+				});
+			},
+			methods:{
+				
+				
+				doSave: function(){
+
+					
+					var Url = baseUrl+"pet/edit/"+vm.petId
+					var imageUrl = baseUrl+"pet/imageupload"
+					vm.pet.petId = parseInt(vm.petId);
+					
+					
+				
+					console.log("Input: ", vm.pet)
+					
+					if(vm.formData==null || vm.formData==""){
+						// parseInt(vm.userId)
+				
+						// then only send edit service request
+						axios({
+							method:"put",
+							url:Url,
+							data:vm.pet,
+							
+						}).then((res)=>{ 
+							var vo = res.data;//backend return ResultVO object
+							
+							console.log("after change: ",vo);
+						
+							var loginUrl = "owner_pet_view.html?sid="+vm.storeId;
+							window.location.href= encodeURI(loginUrl);
+						});
+				
+					 }else{
+
+						
+						// image upload
+						
+						axios({
+							method:"put",
+							contentType: "multipart/form-data; charset=utf-8",
+							url:imageUrl,
+							data: vm.formData
+						}).then((res)=>{
+							vm.pet.petImg =  res.data.data;
+							
+							axios({
+								method:"put",
+								url:Url,
+								data:vm.pet,
+								
+							}).then((res)=>{ 
+								var vo = res.data;//backend return ResultVO object
+								
+								console.log("after change: ",vo);
+								var loginUrl = "owner_pet_view.html?sid="+vm.storeId;
+								window.location.href= encodeURI(loginUrl);
+							});
+					
+
+						})
+					}
+						
+					
+				},
+
+
+				selectStatus: function(){
+					
+					if(vm.selected=="1"){
+						vm.pet.fullVaccine=1;
+					}else{
+						vm.pet.fullVaccine=0;
+					}
+
+				},
+
+
+				fileUpload: function(){
+
+				if (!/image\/\w+/.test(event.target.files[0].type)) {
+				// 提示只能是图片，return
+					alert("Only Picture");
+					return;
+				} 
+					vm.file = event.target.files[0];
+					vm.formData = new FormData();
+					vm.formData.append('file', vm.file);
+					console.log("picture: ", vm.formData)
+				},
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+				},
+
+			}
+		})
+
+	</script>
+</body>
+</html>

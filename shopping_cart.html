@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PetCare Shop</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Reveal - v4.10.0
+  * Template URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <div id ="index1">
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
+          <a :href="'notification_view.html?uid='+userId" class="notification">
+          <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
+        <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span>
+      
+        <i class="d-flex align-items-center ms-4" v-if="isLogout"><a href="#" onclick="javascript:window.location.href='sign_up.html'">Register</a></i>
+        <i class="d-flex align-items-center ms-4" v-else><a @click="logoutRequest" >Logout</a></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <a :href="'store_open.html?uid='+userId">Free Open Store</a>
+
+      </div>
+    </div>
+  </section><!-- End Top Bar-->
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div id="logo">
+        <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto" href="petproduct.html">Pet Product</a></li>
+          <li><a class="nav-link scrollto" href="petservice.html">Pet Service</a></li>
+          <li><a class="nav-link scrollto " href="pet_onlinestore.html">Online Store</a></li>
+          <li v-if="isLogin" class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!-- <li><a href="profile.html">Profile</a></li> -->
+              <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+              <li><a :href="'address.html?uid='+userId">Address Book</a></li>
+              <li><a :href="'my_orderings.html?uid='+userId">Ordering</a></li>
+              <li><a :href="'reservation_view.html?uid='+userId">Reservation</a></li>
+              <li><a :href="'my_comments.html?uid='+userId">Order Reviews</a></li>
+            </ul>
+          </li>
+          <li v-else></li>
+          <li><a class="nav-link scrollto" href="shopping_cart.html"><i class="bi bi-cart4 " style="font-size: 26px;"></i></a></li>
+          
+          
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= hero Section ======= -->
+   <!-- ======= Breadcrumbs Section ======= -->
+   <section class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Shopping Cart</h2>
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li>Shopping Cart</li>
+        </ol>
+      </div>
+
+    </div>
+  </section><!-- End Breadcrumbs Section -->
+
+
+  <main id="main">
+  
+
+    <!-- display the pet service randomly: such as by create_time, and can reserable  -->
+
+    <section id="portfolio" class="portfolio">
+      
+    </section>
+
+    <section class="pt-5 pb-5">
+      <div class="container">
+        <div class="row w-100">
+            <div class="col-lg-12 col-md-12 col-12">
+              
+                <!-- <p class="mb-1 text-center"> -->
+                    <!-- <i class="text-info font-weight-bold">3</i> items in your cart</p> -->
+                <table id="shoppingCart" class="table table-condensed table-responsive">
+                    <thead>
+                        <tr>
+                          
+                          <th style="width:3%">&nbsp;</th>
+                            <th style="width:55%">Product</th>
+                            <th style="width:12%">Price</th>
+                            <th style="width:8%">Quantity</th>
+                            <th style="width:3%">&nbsp;</th>
+                            <th style="width:8%">Action</th>
+                        
+                        </tr>
+                     
+                    </thead>      
+
+                 
+                    <tbody>
+                      
+                    <template v-for="sc,index in cartList">
+                      <tr>
+                       
+                        <td>
+
+                          <input type="checkbox" v-model="opts" :value="index">
+                            <!-- <input class="check" id="J_CheckBox_170769542747" v-model="opts" :value="index" type="checkbox"> -->
+                  
+                        </td>
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-md-1 text-left" style="width: 100px; height: 100px;">
+                                    <img :src="sc.mainImg" alt="" class="img-fluid d-none d-md-block rounded mb-2 ">
+                                </div>
+                                <div class="col text-left mt-sm-1">
+                                    <!-- <h4>Product Name</h4> -->
+                                    <span style="font-size: 14px; color: #ffa3a3;"><i class="bx bx-store"></i> {{sc.storeName}}</span>
+                                    <br>
+                                    <p style="font-size: 16px; color: black; margin-top: 8px;">{{sc.brand}} - {{sc.productName}} - {{sc.weight}}g</p>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Price" v-if="sc.actualPrice!=sc.salePrice">
+                          <span style="color: rgb(147, 147, 147); text-decoration: line-through;font-size: 14px;">CNY {{sc.actualPrice}}</span> <br>
+                          <span style="font-size: 15px; font-weight: bold;">CNY {{sc.salePrice}}</span> 
+                        </td>
+                        <td data-th="Price" v-else>
+                          
+                          <span style="font-size: 15px; font-weight: bold;">CNY {{sc.salePrice}}</span> 
+                        </td>
+                        <td>
+                          <div class="input-group bootstrap-touchspin"><span class="input-group-btn">
+                            <button class="btn btn-default bootstrap-touchspin-down" type="button" @click="changeNum" :data-id="index" data-oper="-">-</button></span>
+                            <span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;" ></span>
+                            <input type="text" name="" min="0" value="1" class="input-qty form-control text-center" style="display: block;" :data-id="index" :value="sc.productNum">
+                            <!-- <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span> -->
+                            <span class="input-group-btn">
+                              <button class="btn btn-default bootstrap-touchspin-up" type="button" @click="changeNum" :data-id="index" data-oper="+">+</button>
+                            </span></div>
+                        </td>
+      
+                        <td>&nbsp;</td>
+                        <td class="actions" data-th="">
+                            <div class="text-right">
+                               
+                                <button class="btn bg-white btn-md mb-2" @click="removeCart(sc.cartId)" >
+                                  
+                                    <i class="bx bx-trash" style="color: #ffa3a3;"></i>
+                                </button>
+                            </div>
+                        </td>
+                      </tr>
+                    </template>
+                    </tbody>
+                </table>
+                <section id="portfolio-details" class="portfolio-details">
+                  <div class="container">
+                    <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                      <div style="width: 100%;" class="portfolio-info">
+                        <h4>Subtotal:</h4>
+                        <h1>CNY&nbsp; {{totalPrice}}</h1>
+                        <!-- <span>Deliver to:</span><br>
+                        <span>Receiver Name:</span> --> 
+                      </div>
+                      <p></p>
+                      <div>
+                      <button class="btn mb-4 btn-lg pl-5 pr-5" style="background-color: #ffa3a3; font-weight: bold; color:white;position: relative; float: right;"  @click="goCheckOut">Checkout</button>
+                    </div>
+                    </div>
+                  </div>
+                  
+                  </div>
+                </section>
+    </div>
+    </section>
+
+  </main><!-- End #main -->
+</div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+      -->
+        Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <!-- Template Main JS File -->
+  
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.js"></script>
+  <script src="assets/js/cookie_utils.js"></script>
+
+  <script>
+ var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+      el:"#index1",
+      data:{
+        username:"",
+				userimg:"",
+        userId:"",
+       
+        totalPrice:0.00,
+				isLogin:false,
+        isLogout:false,
+        cartList:[],
+        isAddCart: false, // true: added , false: not yet
+        opts:[], // select product 
+        tips:"",
+      },
+      watch:{
+					opts:function(){
+						this.totalPrice = 0;
+						for(var i=0; i<this.opts.length; i++){
+							var index = this.opts[i]; //index就是选择的购物车记录的索引
+							this.totalPrice = this.totalPrice + this.cartList[index].productNum * this.cartList[index].salePrice;  
+						}
+					}
+				},
+      created: function(){
+        // get token, username from cookie
+        var token = getCookies("token");
+        if(token == null){
+          var loginUrl = "sign_in.html?tips=Please Loggin! &returnUrl=shopping_cart.html";
+          window.location.href = encodeURI(loginUrl);
+        }else{
+          // check user if login or not
+          if(token != null && token != ""){
+            this.isLogin= true;
+            this.username = getCookies("username");
+            this.token =getCookies("token");
+            this.userId = getCookies("userId");
+            console.log(this.userId)
+        
+          }else{
+            // else token is null, means user not login
+            this.isLogout=true;
+          }
+          
+          // fetch list of pet service with store information
+          var Url = baseUrl+"cart/list/"+this.userId;
+
+          axios({
+              method:"get",
+              url:Url,
+              headers:{
+                  token: this.token
+              },
+            
+          }).then((res)=>{
+            this.cartList = res.data.data;
+        
+            console.log(this.cartList);
+          });
+        }
+      },
+      methods:{
+        changeNum:function(event){
+
+          
+					var index = event.srcElement.dataset.id;
+          var oper = event.srcElement.dataset.oper;
+          
+
+          // increase/decrease product number
+
+          // check if add out of stock
+          
+          // this is for increase product number, and check if it's out of stock
+          if(oper=="+" && this.cartList[index].productNum < this.cartList[index].stock){
+         
+            this.cartList[index].productNum = parseInt( this.cartList[index].productNum )+1;
+            
+          }else if(oper =="-" && this.cartList[index].productNum >1){
+            this.cartList[index].productNum = parseInt( this.cartList[index].productNum )-1;
+            
+          }
+
+          // get cart id, and the product id
+          var cid = this.cartList[index].cartId;
+          var cnum =  this.cartList[index].productNum;
+          
+          var url = baseUrl+"cart/update/"+cid+'/'+cnum;
+
+						axios({
+							url:url,
+							method:"put",
+							headers:{
+								token:this.token
+							},
+              
+						}).then((res)=>{
+							console.log(res);
+							if(res.data.code=10000){
+								this.totalPrice = 0;
+								for(var i=0; i<this.opts.length; i++){
+									var index = this.opts[i]; //index就是选择的购物车记录的索引
+									this.totalPrice = this.totalPrice + this.cartList[index].productNum * this.cartList[index].salePrice; 
+								}
+							}
+						});
+          console.log("number: ", cid);
+
+
+          // for decrease product number
+
+        },
+        logoutRequest: function(){
+
+          // vm.isLogout = true;
+          // clear all cookies
+          deleteCookie();
+          console.log("this token: ", this.token)
+          window.location.href = "sign_in.html";
+        },
+
+        goCheckOut: function(){
+
+          if(this.opts.length ==0){
+							alert("Please select product！")
+						}else{
+							//1.获取选择购物车记录的id [0,2]  --->  cartId 8   cartId 10 --- 8,10,   
+							var cids="";
+							for(var i=0;i<this.opts.length; i++){
+								var index = this.opts[i];
+								var cartId = this.cartList[index].cartId;
+								if(i < this.opts.length-1){
+									cids = cids + cartId + ",";
+								}else{
+									cids = cids + cartId;
+								}
+							}
+							//2.跳转到order-add.html，并cids传递过去
+							window.location.href="checkout.html?cids="+cids;
+						}
+
+        },
+
+        removeCart(cid){
+          console.log("cid: ", cid)
+          let doDelete = confirm("Are you sure to delete?");
+          if(doDelete){
+            //if confirm to delete
+           
+            var Url = baseUrl+"cart/delete/"+cid;
+            axios({
+						method:"delete",
+						url:Url,
+            headers:{
+                token: this.token
+            },
+					
+				    }).then((res)=>{
+              vm.vo = res.data;
+              alert(vm.vo.msg);
+              window.location.reload(); //refresh page
+            })
+          
+          } else {
+            alert("Action canceled");
+          }
+        },
+
+      }
+   
+    })
+    
+
+  </script>
+</body>
+
+</html>

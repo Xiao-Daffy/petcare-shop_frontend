@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+	<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+	<style>
+	  #editor—wrapper {
+		border: 1px solid #ccc;
+		z-index: 100; /* 按需定义 */
+	  }
+	  #toolbar-container { border-bottom: 1px solid #ccc; }
+	  #editor-container { height: 500px; }
+	</style>
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Edit Pet Product</h2>
+		
+				 <!-- ======= Profile  Section ======= -->
+				 <section id="portfolio-details" class="portfolio-details">
+					<div class="container">
+						
+						<div class="row gy-4">
+			  
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Name</strong>: *<input type="text" v-model="product.productName" class="form-control"  size="40" :placeholder="productInfo.productName"/>
+								   
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Brand</strong>: *<input type="text" v-model="product.brand" class="form-control"  size="40" :placeholder="productInfo.brand"/>
+								   
+								  </div>
+							</div>
+						</div>
+
+						<div class="row gy-4">
+			  
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Made Place</strong>: *<input type="text" v-model="product.madePlace" class="form-control"  size="40" :placeholder="productInfo.madePlace"/>
+								   
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Factory Name</strong>: *<input type="text" v-model="product.factoryName"  class="form-control"  size="40" :placeholder="productInfo.factoryName"/>
+								   
+								  </div>
+							</div>
+						</div>
+						
+						<div class="row gy-4">
+			  
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Weight(g)</strong>: *<input type="text" v-model="product.weight"  class="form-control"  size="40" :placeholder="productInfo.weight"/>
+								   
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Stock</strong>: *<input type="text"  v-model="stocks" class="form-control"  size="40" :placeholder="productInfo.stock"/>
+								   
+								  </div>
+							</div>
+						</div>
+
+						<div class="row gy-4">
+			  
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Period(day)</strong>: *<input type="text" v-model="product.productPeriod" class="form-control"  size="40" :placeholder="productInfo.productPeriod"/>
+								   
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Storage Method</strong>: *<input type="text" v-model="product.storageMethod"  class="form-control"  size="40" :placeholder="productInfo.storageMethod"/>
+								   
+								  </div>
+							</div>
+						</div>
+						<p></p><p></p>
+						<div class="row gy-4">
+							<div class="col-lg-4">
+								<div class="form-outline mb-4">
+									
+									<strong>Discount(1-10)</strong>: *<input type="text" v-model="discounts" class="form-control" size="40" :placeholder="productInfo.discount"/>
+								   
+								  </div>
+							</div>
+						
+						
+						</div>
+						<div class="row gy-4">
+							<div class="col-lg-4">
+								<div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Pet Product Status</strong>:  *&nbsp; &nbsp;
+								<select name="cars" id="cars" v-model="selected"  @change="selectStatus">
+									<!-- <select class="form-control" v-model="selected"  @change="changeLocation"></select> -->
+									<option value="1">Buyable</option>
+									<option value="0">Disable</option>
+								
+								</select>
+								
+							  </div>
+							  <p></p><p></p>
+							</div>
+							<div class="col-lg-1"></div>
+						</div>
+						<p></p><p></p>
+						<div class="row gy-4">
+			  
+							<div class="col-lg-9">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Factory Address</strong>: *<input type="text" v-model="product.factoryAddress"  class="form-control"  size="40" :placeholder="productInfo.factoryAddress"/>
+								   
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							
+						</div>
+						<div class="row gy-4">
+			  
+							<div class="col-lg-9">
+								<div class="form-outline mb-4">
+									
+									<strong>Product Price</strong>: *<input type="text" v-model="price"  class="form-control"  size="40" :placeholder="productInfo.actualPrice"/>
+								   
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							
+						</div>
+						
+						<div class="row gy-4">
+							<div class="col-lg-9">
+							<div class="form-outline mb-4"> <!--v-model: two-way bound-->
+				   
+								<strong>Pet Product Description </strong>: 
+								<div id="editor—wrapper">
+									<div id="toolbar-container"><!-- 工具栏 --></div>
+									<div id="editor-container"  @input="handleInput"><!-- 编辑器 --></div>
+								</div>
+							  </div>
+							</div>
+
+						</div>
+						
+						<div class="row gy-4">
+			  
+							<div class="col-lg-4">
+								<div class="form-outline mb-4"> <!--v-model: two-way bound-->
+					   
+									<strong>Main Product Photo</strong>: <p></p>
+								
+									<input type="file" id="file"  @change="fileUpload1($event)" >
+									
+								  </div>
+							</div>
+							<div class="col-lg-1"></div>
+							<div class="col-lg-4">
+								<div class="form-outline mb-4"> <!--v-model: two-way bound-->
+					   
+									<strong>Product Photo</strong>: <p></p>
+								
+									<input type="file" id="file"  @change="fileUpload2($event)" >
+									
+								  </div>
+							</div>
+						</div>
+
+							<!-- Submit button -->
+							<div style="margin-left: 20%; margin-top: 30px;">
+							  <button type="button"  @click="doSave" style="background-color: #F5BDBD; width: 20%;" class="btn btn-block mb-4 align-items-center ">Save</button>
+							</div>
+						  
+				
+			  
+			  
+					</div>
+				  </section><!-- End Profile Form Section -->
+	
+
+
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
+	<script>
+		const { createEditor, createToolbar } = window.wangEditor
+		
+		const editorConfig = {
+			placeholder: '',
+			onChange(editor) {
+			  const html = editor.getHtml()
+			  console.log('editor content', html)
+			  // 也可以同步到 <textarea>
+			}
+		}
+		
+		const editor = createEditor({
+			selector: '#editor-container',
+			html: '<p><br></p>',
+			config: editorConfig,
+			mode: 'default', // or 'simple'
+		})
+		
+		const toolbarConfig = {}
+		
+		const toolbar = createToolbar({
+			editor,
+			selector: '#toolbar-container',
+			config: toolbarConfig,
+			mode: 'default', // or 'simple'
+		})
+
+	
+				
+					
+		</script>
+
+	
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				storeId:"",
+				userId:"",
+				token:"",
+				productInfo:{},
+				productId:"",
+				product:{
+					productId:0,
+					productName:"",
+					actualPrice:0.0,
+					productDesc1:"",
+					// productDesc2:"",
+					madePlace:"",
+					productPeriod:"",
+					brand:"",
+					factoryName:"",
+					factoryAddress:"",
+					weight:"",
+					storageMethod:"",
+					discount:0.0,
+					stock:0,
+					mainImg:"",
+					otherImg:"",
+					
+					productStatus:0
+				},
+				stocks:"",
+				price:"",
+				discounts:"",
+				duration:"",
+				selected:"",// option for pet product status
+				file:{},
+				formData1:null,
+        		formData2:null,
+			},
+
+			created:function(){
+				this.isLogin = true;
+						
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				this.storeId =getCookies("storeId");
+				this.userId = getCookies("userId");
+				this.productId = getUrlParam("pid");
+				this.product.productId = parseInt(this.productId);
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+				}
+
+				// 
+			// get single pet service
+				var Url = baseUrl+"product/get/"+this.productId
+				axios.get(Url,).then((res)=>{
+					this.productInfo = res.data.data;
+					this.product.productStatus = this.productInfo.productStatus;
+					console.log(this.productInfo)
+				});
+			},
+			methods:{
+				
+				
+				doSave: function(){
+
+					// get price
+					if(vm.price !="" || vm.price!=null){
+						// means user typed some something
+						vm.product.actualPrice = parseFloat(vm.price);
+					}
+					// get discount
+					if(vm.discounts !="" || vm.discounts!=null){
+						// means user typed some something
+						vm.product.discount = parseFloat(vm.discounts);
+					}
+
+					// get stock
+					if(vm.stocks !="" || vm.stocks!=null){
+						// means user typed some something
+						vm.product.stock = parseInt(vm.stocks);
+					}
+
+					// update info
+					console.log("edit product: ", vm.product);
+
+					var Url = baseUrl+"product/edit/"+vm.productId;
+					var imageUrl = baseUrl+"product/imageupload";
+					
+					if((vm.formData1==null || vm.formData1=="") && (vm.formData2==null || vm.formData2=="")){
+
+						// only update product info
+						axios({
+							method:"put",
+							url:Url,
+							data:vm.product,
+							
+						}).then((res)=>{ 
+							var vo = res.data;//backend return ResultVO object
+							
+							console.log("after change: ",vo);
+						
+							var loginUrl = "owner_product_view.html?sid="+vm.storeId;
+							window.location.href= encodeURI(loginUrl);
+						});
+					}else{
+						axios({
+						method:"put",
+						contentType: "multipart/form-data; charset=utf-8",
+						url:imageUrl,
+						data: vm.formData1
+						}).then((res)=>{
+							vm.product.mainImg =  res.data.data;
+							axios({
+							method:"put",
+							contentType: "multipart/form-data; charset=utf-8",
+							url:imageUrl,
+							data: vm.formData2
+						}).then((res)=>{
+							vm.product.otherImg =  res.data.data;
+								// save product info
+					
+							axios({
+								method:"put",
+								url:Url,
+								data:vm.product,
+										
+							}).then((res)=>{ 
+								var vo = res.data;//backend return ResultVO object
+										
+								console.log("after add: ",vo);
+								var loginUrl = "owner_product_view.html?sid="+vm.storeId;
+								window.location.href= encodeURI(loginUrl);
+							});
+						})
+						})
+						
+						
+					
+					
+						
+						
+					}
+						
+					
+					
+				},
+
+
+				selectStatus: function(){
+					
+					if(vm.selected=="1"){
+						vm.product.productStatus=1;
+					}else{
+						vm.product.productStatus=2;
+					}
+
+				},
+
+
+				fileUpload1: function(){
+
+				if (!/image\/\w+/.test(event.target.files[0].type)) {
+				// 提示只能是图片，return
+					alert("Only Picture");
+					return;
+				} 
+					vm.file = event.target.files[0];
+					vm.formData1 = new FormData();
+					vm.formData1.append('file', vm.file);
+					console.log("picture: ", vm.formData1)
+				},
+
+				fileUpload2: function(){
+
+				if (!/image\/\w+/.test(event.target.files[0].type)) {
+				// 提示只能是图片，return
+					alert("Only Picture");
+					return;
+				} 
+					vm.file = event.target.files[0];
+					vm.formData2 = new FormData();
+					vm.formData2.append('file', vm.file);
+					console.log("picture: ", vm.formData2)
+				},
+
+
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+				},
+				handleInput(event) {
+					vm.product.productDesc1 = event.target.innerHTML;
+
+				}
+
+
+			}
+		})
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+</head>
+<style>
+.cheds{
+
+/* font-weight: lighter; */
+font-size: 13px;
+}
+</style>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Order Reviews</h2>
+		
+				<!-- PRODUCT LIST -->
+
+			<div class="container bootstrap snippets bootdey">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="main-box no-header clearfix">
+							<div class="main-box-body clearfix">
+								<div class="table-responsive">
+									<p id="btt"></p><p></p>
+								
+									<table id="tableList" class="table user-list">
+										<thead>
+											<tr>
+											<th> <span>Order ID</span></th>
+											<th><span>Images</span></th> <!--Main photo-->
+											<th><span>Product Name</span></th>		
+											<th><span>Bought Num</span></th>				
+											<th><span>Total Paid</span></th>
+											<th><span>Content</span></th>
+										
+											<th><span>Reviwer</span></th>
+											<th><span>&nbsp;</span></th>
+										
+										</tr>
+										</thead>
+										<tbody>
+
+											<!-- Start Loop:  List of Pet Service -->
+											<template v-for="cl, index in listComment">
+											<tr>
+												<td  style="font-size: 14px;">
+													<span class="label label-default">{{cl.orderId}}</span>
+												</td>
+												<td>
+													<!-- <img :src="service.serviceImg" alt=""> -->
+													<img src="assets/img/cat1.jpg" alt=""> <!--Main photo-->
+												</td>
+										
+												<td>
+													<span class="label label-default">{{cl.productName}}</span>
+												</td>
+											
+												<td>
+													<span class="label label-default">{{cl.buyCounts}}</span>
+												</td>
+												<td>
+													<span class="label label-default">{{cl.totalAmount}}</span>
+												</td>
+												<td>
+													<span class="cheds label label-default" v-html="cl.content"></span>
+												</td>
+												<td>
+													<span class="label label-default" >{{cl.firstname}} {{cl.lastname}}</span>
+												</td>
+											<td>&nbsp;</td>
+											</tr>
+										</template>
+										<!-- End Loop:  List of Pet Service -->
+
+										</tbody>
+									</table>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+				<!-- PRODUCT LIST -->
+				
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+
+
+	
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				userId:"",
+				// userId:"",
+				storeId:"",
+				token:"",
+				listComment:[],
+			},
+
+			created:function(){
+				this.isLogin = true;
+				
+				this.storeId = getUrlParam("sid");
+				
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+					this.userId = getCookies("userId");
+				}
+
+				// fecth a list of pet service 
+				var Url = baseUrl+"comment/all/"+this.storeId;
+				axios({
+					method:"get",
+					url:Url,
+					headers:{
+						token: this.token
+					},
+				}).then((res)=>{ 
+					
+					this.listComment = res.data.data
+					
+					console.log("list of comment: ",this.listComment );
+					
+				});
+
+			},
+			methods:{
+				
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+        		},
+
+				doDelete: function(proid){
+					console.log("delete id: ", proid)
+
+					
+					let doDelete = confirm("Are you sure to delete?");
+					if(doDelete){
+						//if confirm to delete
+					
+						var deleteUrl = baseUrl+"product/delete/"+proid;
+						axios({
+							method:"delete",
+							url:deleteUrl,
+							params:{
+								pid: proid,
+							}
+							
+						}).then((res)=>{
+						vm.vo = res.data;
+						alert(vm.vo.msg);
+						window.location.reload(); //refresh page
+						})
+					
+					} else {
+						alert("Action canceled");
+					}
+					
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>

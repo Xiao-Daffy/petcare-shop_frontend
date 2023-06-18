@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>{{storeInfo.storeName}}</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				<a class="btn-download" onclick="downloadPDF()">
+					<i class='bx bxs-cloud-download' ></i>
+					<span class="text">Download PDF</span>
+				</a>
+			</div>
+			<div class="contain"  id="dataAnalysis">
+				<!-- <div class="row">
+					<template v-for="x, index in MonthProfitList">
+						<p>totalAmount: {{x.totalAmount}}</p>
+					</template>
+				</div> -->
+				<div class="row">
+					
+				
+			
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3><i class="bi bi-currency-yen"></i>{{totalSale}}</h3>
+						<p>Total Sale</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3><i class="bi bi-currency-yen"></i> {{averageSale}}</h3>
+						<p>Average Sale</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3><i class="bi bi-currency-yen"></i> {{orderSale.totalAmount}}</h3>
+						<p>Product Sale</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3><i class="bi bi-currency-yen"></i> {{reservationSale.totalAmount}}</h3>
+						<p>Service Profit</p>
+					</span>
+				</li>
+			</ul>
+			</div>
+			<div class="row">
+			<div class="col-6">
+				<p></p>
+				<ul class="box-info">
+					<li>
+						<i class='bx bxs-check-circle' ></i></i>
+						<span class="text">
+							<h3>{{orderSale.buyCounts}}</h3>
+							<p>Sold Number</p>
+						</span>
+					</li>
+					<li>
+						<i class='bx bxs-check-circle' ></i>
+						<span class="text">
+							<h3>{{reservationSale.reserveId}}</h3>
+							<p>Reserved Count</p>
+						</span>
+					</li>
+				</ul>
+				<ul class="box-info">
+					<li>
+						<i class='bx bxs-basket' ></i>
+						<span class="text">
+							<h3> 2834</h3>
+							<p>Product Stock</p>
+						</span>
+					</li>
+					<li>
+						<i class='bx bxs-basket' ></i>
+						<span class="text">
+							<h3> 2543</h3>
+							<p>Pet Service Available</p>
+						</span>
+					</li>
+				</ul>
+				
+			
+		</div>
+		<div class="col-6">
+			<ul class="box-info">
+				<li style="border: dashed 1px blue; text-align: center;">
+					
+					<span class="text">
+						<p style="font-weight: bold; font-size: 20px;"><i class="bi bi-trophy" style="color:red; font-size: 28px;"></i>  Best Sold Product</p>
+						<p>{{bestProductInfo.productName}}</p>
+						<p style="font-weight: bold; color: blue"><i class="bi bi-bag-check"></i> &nbsp;{{bestProductInfo.buyCounts}}</p>
+						<p style="font-weight: bold; color: blue"><i class="bi bi-currency-yen"></i> {{bestProductInfo.totalAmount}} </p>
+
+					</span>
+				</li>
+				<li style="border: dashed 1px blue; text-align: center;">
+					
+					<span class="text">
+						<p style="font-weight: bold;  font-size: 20px;"><i class="bi bi-award" style="color:red; font-size: 28px;"></i> Best Reserved Service</p>
+						<p>{{bestServiceInfo.serviceName}}</p>
+						<p style="font-weight: bold; color: blue"><i class="bi bi-bag-check"></i> &nbsp;{{bestServiceInfo.numOfPet}}</p> <!--Reserved number-->
+						<p style="font-weight: bold; color: blue"><i class="bi bi-currency-yen"></i> {{bestServiceInfo.totalAmount}} </p>
+				
+					</span>
+				</li>
+			
+			</ul>
+		</div>
+		
+		</div>
+
+		<!-- Charts -->
+		<div class="row">
+			<div class="col-6">
+				<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Monthly Prduct Profit</h3>
+					</div>
+
+					<div>
+					
+						<br>
+						<canvas ref="chartCanvas"></canvas>
+						<!-- <canvas id="myChart"></canvas> -->
+					</div>
+				</div>
+				</div>
+
+			</div>
+			<div class="col-6">
+				<div class="table-data">
+					<div class="order">
+						<div class="head">
+							<h3>Recent Orders</h3> <!-- 5 records-->
+							
+						</div>
+						<table>
+							<thead>
+								<tr>
+									
+									<th>User</th>
+									<th>&nbsp;</th>
+									<th>Product</th>
+									<th>Date Order</th>
+
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<template  v-for="ro, index in recentOrders">
+									<tr style="font-size: 13px;">
+										<td>
+											
+											<p>{{ro.receiverName}}</p>
+										</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td>
+											
+											<p>{{ro.productName}}{{ro.productName}}</p>
+										</td>
+										<td>{{ro.createTime.substring(0,10)}}</td>
+										<td v-if="ro.orderStatus == 'To Pay'"  ><span class="status  bg-warning" >Pending</span></td>
+										<td v-else-if="ro.orderStatus == 'To Ship'" ><span class="status"  style="background-color:rgb(20, 191, 225);">To Ship</span></td>
+										<td v-else-if="ro.orderStatus == 'To Receive'" ><span class="status"  style="background-color:rgb(76, 127, 222);" >Shiping</span></td>
+										<td v-else-if="ro.orderStatus == 'Completed'" ><span class="status"  style="background-color:green;">Completed</span></td>
+					
+										<td v-else ><span class="status"  style="background-color:grey;">Canceled</span></td>
+									</tr>
+								</template>
+							
+								
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+<!-- Charts -->
+		<div class="row">
+			<div class="col-6">
+				<div class="table-data">
+					<div class="order">
+						<div class="head">
+							<h3>Monthly Pet Service Profit</h3>
+						</div>
+	
+						<div>
+			
+							<br>
+							<canvas ref="chartCanvas0"></canvas>
+							<!-- <canvas id="myChart"></canvas> -->
+						</div>
+					</div>
+
+				
+				</div>
+
+			</div>
+			<div class="col-6">
+				<div class="table-data">
+					<div class="order">
+						<div class="head">
+							<h3>Recent Reservation</h3> <!-- 5 records-->
+							<!-- <i class='bx bx-search' ></i>
+							<i class='bx bx-filter' ></i> -->
+						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>User</th>
+									<th>Pet Service</th>
+									<th>Start Date</th>
+									<th>Start Time</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template  v-for="rr, index in recentReservation">
+									<tr style="font-size: 13px;">
+										<td>
+										
+											<p>{{rr.reserverName}}</p>
+										</td>
+										<td>
+										
+											<p>{{rr.serviceName}}</p>
+										</td>
+										<td>{{rr.checkInDate.substring(0,10)}}</td>
+										<td>{{rr.checkInTime}}</td>
+										<td v-if="rr.reserveStatus == 'Pending'"  ><span class="status  bg-warning" >Pending</span></td>
+										<td v-else-if="rr.reserveStatus == 'Confirmed'" ><span class="status"  style="background-color:blue;">Confirmed</span></td>
+										<td v-else-if="rr.reserveStatus == 'Rejected'" ><span class="status"  style="background-color:blue;">Rejected</span></td>
+										<td v-else-if="rr.reserveStatus == 'Canceled'" ><span class="status"  style="background-color:red;">Canceled</span></td>
+										<td v-else-if="rr.reserveStatus == 'Completed'" ><span class="status"  style="background-color:green;">Completed</span></td>
+										
+									</tr>
+							</template>
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<!-- Line  -->
+		<div class="row">
+			<div class="col-6">
+				<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Monthly Product Sales Comparison</h3>
+					</div>
+
+					<div>
+						Line chart (This month/Last Month)
+						<br>
+						<canvas ref="chartCanvas2"></canvas>
+						<!-- <canvas id="myChart"></canvas> -->
+					</div>
+				</div>
+				</div>
+
+			</div>
+			<div class="col-6">
+				<div class="table-data">
+					<div class="order">
+						<div class="head">
+							<h3>Monthly Pet Service Reservation Comparison </h3>
+						</div>
+	
+						<div>
+							Line chart (This month/Last Month)
+							<br>
+							<canvas ref="chartCanvas4"></canvas>
+							<!-- <canvas id="myChart"></canvas> -->
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+			<!-- Charts -->
+			<div class="row">
+				<div class="col-8">
+					<div class="table-data">
+						<div class="order">
+							<div class="head">
+								<h3>Top 5 Product(Last 30 Days)</h3>
+							</div>
+		
+							<div>
+								
+								<br>
+								<canvas ref="chartCanvas3"></canvas>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+				<div class="col-4">
+					<div class="table-data">
+					<div class="order">
+						<div class="head">
+							<h3>Sale Type</h3>
+						</div>
+
+						<div>
+							
+							<br>
+							<canvas ref="chartCanvas9"></canvas>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Charts -->
+			<div class="row">
+				<div class="col-8">
+					<div class="table-data">
+						<div class="order">
+							<div class="head">
+								<h3>Top 5 Service(Last 30 Days)</h3>
+							</div>
+		
+							<div>
+							
+								<br> 
+								<canvas ref="chartCanvas5"></canvas>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+				<div class="col-4">
+					<div class="table-data">
+						<div class="order">
+							<div class="head">
+								<h3>Documented Pet Species</h3>
+							</div>
+	
+							<div>
+								
+								<br>
+								<canvas ref="chartCanvas6"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+		
+		</div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+</div>
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
+	<script>
+		function downloadPDF() {
+		  // Get the dashboard content element
+		  const dashboard = document.getElementById('dataAnalysis');
+
+		// Generate the PDF from the dashboard content
+		html2pdf()
+		.from(dashboard)
+		.save('dashboard.pdf');
+		}
+	  </script>
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			
+			data:{
+				isLogin: false,
+				storeInfo:{},
+				userId:"",
+				storeId:"",
+				token:"",
+				MonthProfitList:[],
+				recentOrders:[],
+				recentReservation:[],
+				bestProductInfo:[],
+				bestServiceInfo:[],
+				topFiveProduct:[],
+				topFiveService:[],
+				lastMonthDailyReservationProfit:[],
+				currentMonthDailyReservationProfit:[],
+				currentMonthDailyOrderProfit:[],
+				lastMonthDailyOrderProfit:[],
+				petTypeList:[],
+				totalSale:0.0,
+				averageSale:0.0,
+				orderSale:{},
+				reservationSale:{},
+			
+			},
+
+			created:function(){
+				this.isLogin = true;
+				this.userId = getUrlParam("uid");
+
+				// fetch store information from backend
+				
+				console.log(this.userId);
+				
+				
+
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+					
+				}else{
+					var loginUrl = "sign_in.html"
+         			window.location.href = encodeURI(loginUrl);
+				}
+
+				var Url = baseUrl+"store/get/"+this.userId;
+				var Url = baseUrl + "store/get/" + this.userId;
+				axios({
+					method: "get",
+					url: Url,
+				}).then((res) => {
+					this.storeInfo = res.data.data;
+					setCookies("storeId", this.storeInfo.storeId);
+					this.storeId = getCookies("storeId");
+					console.log("store id: ", this.storeId);
+					// make monthly profit bar chart
+					this.getMonthlyProfit().then(() => {
+						this.createMonthlyBarChart();
+					});
+
+					// make the recent 5 records
+					this.getRecentOrderReservation(this.storeId)
+
+					// best product sold, pet service
+					this.getBestProductService();
+
+					// get top 5 product & service
+					this.getTopFiveProductService().then(()=>{
+						// console.log("five product: ", this.topFiveProduct)
+						// console.log("five product: ", this.topFiveService)
+						this.createTopFiveBarChart();
+					})
+
+
+					// get line chart
+					this.getLastCurrentMonthOrderReserve().then(()=>{
+						this.createMonthLineChart();
+					})
+
+					// get total sale/average sale, product total sale, reservation total sale,
+					this.getAllTotal().then(()=>{
+						console.log("order sale", this.orderSale);
+						console.log("reservation sale", this.reservationSale);
+						// sale type pie chart
+						this.createSaleTypePieChart();
+					
+					});
+					
+					// pet pie chart
+					this.getPetType().then(()=>{
+						console.log("pet ", this.petTypeList)
+						this.createPetTypePieChart();
+					})
+				});
+
+				
+			},
+		
+			methods:{
+				
+				logoutRequest: function(){
+
+					// vm.isLogout = true;
+					// clear all cookies
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+        		},
+
+				// get topest product and service, based on the sale quantity
+				getBestProductService: function(){
+					var sid = getCookies("storeId");
+					console.log("store id is: " + sid);
+					var Url1 = baseUrl + "dashboard/best/" + sid;
+
+					return axios({
+						method: "get",
+						url: Url1,
+					}).then((res) => {
+						var bestInfo = res.data.data;
+						this.bestProductInfo = bestInfo["product"];
+						this.bestServiceInfo = bestInfo["service"];
+					});
+				},
+
+
+				// 1. get monthly product sale and pet service reservation profit
+				getMonthlyProfit: function(){
+					
+					var sid = getCookies("storeId");
+					console.log("store id is: " + sid);
+					var Url1 = baseUrl + "dashboard/monthly/" + sid;
+
+					return axios({
+						method: "get",
+						url: Url1,
+					}).then((res) => {
+						this.MonthProfitList = res.data.data;
+					});
+				},
+				// 2. get 5 recent orders and reservation
+				getRecentOrderReservation: function(storeId){
+					
+					console.log("store id is: "+storeId)
+					var Url1 = baseUrl+"dashboard/recent/"+storeId;
+     
+					return axios({
+						method:"get",
+						url:Url1,
+						
+						}).then((res)=>{ 
+						//backend return ResultVO object
+						 var recentResult = res.data.data;
+						 this.recentOrders = recentResult["order"]
+						 this.recentReservation = recentResult["reservation"];
+					
+					});
+				},
+				// 2. get 5 recent orders and reservation
+				getLastCurrentMonthOrderReserve: function(){
+					var sid = getCookies("storeId");
+					
+					var Url1 = baseUrl+"dashboard/compare/"+sid;
+     
+					return axios({
+						method:"get",
+						url:Url1,
+						
+						}).then((res)=>{ 
+						//backend return ResultVO object
+						 var result = res.data.data;
+						 this.lastMonthDailyReservationProfit = result["lastReservation"];
+						 this.currentMonthDailyReservationProfit = result["currentReservation"];
+						 this.lastMonthDailyOrderProfit = result["lastOrder"];
+						 this.currentMonthDailyOrderProfit = result["currentOrder"];
+						
+					});
+				},
+
+				// 2. get 5 recent orders and reservation
+				getTopFiveProductService: function(){
+					var sid = getCookies("storeId");
+					
+					var Url1 = baseUrl+"dashboard/top/"+sid;
+		
+					return axios({
+						method:"get",
+						url:Url1,
+						
+						}).then((res)=>{ 
+						//backend return ResultVO object
+							var topResult = res.data.data;
+							this.topFiveProduct = topResult["product"];
+							this.topFiveService = topResult["service"];
+						
+					});
+				},
+				// 2. total sale, 
+				getAllTotal: function(){
+					var sid = getCookies("storeId");
+					
+					var Url1 = baseUrl+"dashboard/total/"+sid;
+		
+					return axios({
+						method:"get",
+						url:Url1,
+						
+						}).then((res)=>{ 
+						//backend return ResultVO object
+							var result = res.data.data;
+							this.orderSale = result["order"];
+							this.reservationSale = result["reservation"];
+							var months = result["months"]
+							this.totalSale = this.orderSale.totalAmount + this.reservationSale.totalAmount;
+							this.averageSale = (this.totalSale / months).toFixed(2);
+						
+					});
+				},
+				// 2. get 5 recent orders and reservation
+				getPetType: function(){
+					var sid = getCookies("storeId");
+					
+					var Url1 = baseUrl+"dashboard/pet/"+sid;
+		
+					return axios({
+						method:"get",
+						url:Url1,
+						
+						}).then((res)=>{ 
+						//backend return ResultVO object
+							var result = res.data.data;
+							this.petTypeList = result;
+						
+					});
+				},
+				// create monthly bar chart
+				createMonthlyBarChart: function() {
+					// monthly product sale
+					var monthProduct = this.MonthProfitList["product"]
+					var monthProductMonths =monthProduct.map(item => item.receiverName);
+					var monthProductTotal =monthProduct.map(item => item.actualAmount);
+					
+
+					// monthly pet service sale
+					var monthService = this.MonthProfitList["service"]
+					var monthServiceMonths =monthService.map(item => item.reserverName);
+					var monthServiceTotal =monthService.map(item => item.totalAmount);
+
+					// Create the chart
+					const chartCanvas = this.$refs.chartCanvas;
+					new Chart(chartCanvas, {
+					type: 'bar',
+					data: {
+						labels: monthProductMonths,
+
+						datasets: [{
+						label: 'Monthly Product Profit',
+						data: monthProductTotal,
+						backgroundColor: 'rgba(3, 102, 252)', // Adjust the color as per your preference
+						borderColor: 'rgba(3, 102, 252)',
+						borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						scales: {
+						yAxes: [{
+							ticks: {
+							beginAtZero: true
+							}
+						}]
+						}
+					}
+					});
+
+					// Create the chart
+					const chartCanvas0 = this.$refs.chartCanvas0;
+					new Chart(chartCanvas0, {
+					type: 'bar',
+					data: {
+						labels: monthServiceMonths,
+
+						datasets: [{
+						label: 'Monthly Pet Care Service Profit',
+						data: monthServiceTotal,
+						backgroundColor: 'rgba(169, 3, 252)', // Adjust the color as per your preference
+						borderColor: 'rgba(169, 3, 252)',
+						borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						scales: {
+						yAxes: [{
+							ticks: {
+							beginAtZero: true
+							}
+						}]
+						}
+					}
+					});
+				},
+
+				createTopFiveBarChart: function(){
+					// top 5 product
+					var topProductName = this.topFiveProduct.map(item => item.productName.substring(0,35))
+					var topProductBuyCount = this.topFiveProduct.map(item => item.buyCounts)
+				
+					// Create the chart
+					const chartCanvas3 = this.$refs.chartCanvas3;
+					new Chart(chartCanvas3, {
+						type: 'bar', // Change the chart type to "bar" instead of "horizontalBar"
+						data: {
+							labels:topProductName,
+							datasets: [{
+								label: 'Sales',
+								data: topProductBuyCount,
+								backgroundColor: 'rgba(3, 102, 252)', // Set the bar color
+								borderColor: 'rgba(3, 102, 252)',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							indexAxis: 'y', // Set the index axis to 'y' for horizontal bar chart
+							scales: {
+								x: {
+									beginAtZero: true,
+									
+								}
+							}
+						}
+					});
+
+					// top 5 service
+					var topServicetName = this.topFiveService.map(item => item.serviceName.substring(0,35))
+					var topServicetReserveCount = this.topFiveService.map(item => item.numOfPet)
+					
+					// Create the chart
+					const chartCanvas5 = this.$refs.chartCanvas5;
+					new Chart(chartCanvas5, {
+						type: 'bar', // Change the chart type to "bar" instead of "horizontalBar"
+						data: {
+							labels:topServicetName,
+							datasets: [{
+								label: 'Reservations',
+								data: topServicetReserveCount,
+								backgroundColor: 'rgba(169, 3, 252)', // Set the bar color
+								borderColor: 'rgba(169, 3, 252)',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							indexAxis: 'y', // Set the index axis to 'y' for horizontal bar chart
+							scales: {
+								x: {
+									beginAtZero: true
+								},
+							
+							}
+						}
+					});
+				},
+
+				createMonthLineChart: function(){
+					
+					// line chart 
+					// ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'], // 5 days
+					// Create the chart
+					const chartCanvas2 = this.$refs.chartCanvas2;
+					new Chart(chartCanvas2, {
+					type: 'line',
+					data: {
+						labels: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+						datasets: [
+						
+						{
+							label: 'This Month',
+							data: this.currentMonthDailyOrderProfit,
+							borderColor: 'rgba(3, 102, 252)',
+							backgroundColor: 'transparent',
+							fill: true
+						},
+						{
+							label: 'Last Month',
+							data: this.lastMonthDailyOrderProfit,
+							borderColor: '#adacad',
+							backgroundColor: 'transparent',
+							fill: true
+						}
+						]
+					},
+					options: {
+						responsive: true
+					}
+					});
+
+					const chartCanvas4 = this.$refs.chartCanvas4;
+					new Chart(chartCanvas4, {
+					type: 'line',
+					data: {
+						labels: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+						datasets: [
+						
+						{
+							label: 'This Month',
+							data: this.currentMonthDailyReservationProfit,
+							borderColor: 'rgba(169, 3, 252)',
+							backgroundColor: 'transparent',
+							fill: true
+						},
+						{
+							label: 'Last Month',
+							data: this.lastMonthDailyReservationProfit,
+							borderColor: '#adacad',
+							backgroundColor: 'transparent',
+							fill: true
+						}
+						]
+					},
+					options: {
+						responsive: true
+					}
+					});
+
+				},
+
+				createSaleTypePieChart: function(){
+					
+					// pie chart 
+						const chartCanvas9 = this.$refs.chartCanvas9;
+						new Chart(chartCanvas9, {
+						type: 'pie',
+						data: {
+							labels: ['Product', 'Care Service'],
+							datasets: [{
+							data: [this.orderSale.buyCounts, this.reservationSale.reserveId],
+							backgroundColor: [
+								'#66B2FF',
+								'#FD834F',
+								
+								// Add more colors as needed
+							],
+							borderColor: 'rgba(255, 255, 255, 1)',
+							borderWidth: 1
+							}]
+						},
+						options: {
+							responsive: true
+						}
+					});
+
+				},
+
+			createPetTypePieChart: function(){
+
+		
+					var petTypeSpeciese = this.petTypeList.map(item => item.petSpeciese)
+					var petTypeSpecieseNumber = this.petTypeList.map(item => item.fullVaccine)
+					// pie chart 
+						const chartCanvas6 = this.$refs.chartCanvas6;
+						new Chart(chartCanvas6, {
+						type: 'pie',
+						data: {
+							labels: petTypeSpeciese,
+							datasets: [{
+							data: petTypeSpecieseNumber,
+							backgroundColor: [
+								'#66B2FF',
+								'#ed79da',
+								'#63bdeb',
+								'#FD834F'
+								
+								// Add more colors as needed
+							],
+							borderColor: 'rgba(255, 255, 255, 1)',
+							borderWidth: 1
+							}]
+						},
+						options: {
+							responsive: true
+						}
+					});
+
+				},
+			}
+		})
+
+	</script>
+</body>
+</html>

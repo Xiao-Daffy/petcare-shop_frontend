@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/table.css">
+	<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+	<style>
+	  #editor—wrapper {
+		border: 1px solid #ccc;
+		z-index: 100; /* 按需定义 */
+	  }
+	  #toolbar-container { border-bottom: 1px solid #ccc; }
+	  #editor-container { height: 500px; }
+	</style>
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="assets/img/cat1.jpg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<!-- Button trigger modal -->
+ 
+				<h2>Pet Services</h2>
+		
+				 <!-- ======= Profile  Section ======= -->
+				 <section id="portfolio-details" class="portfolio-details">
+					<div class="container">
+			  
+					  <div class="row gy-4">
+			  
+						
+			  
+						<div class="col-lg-9">
+						  <div class="portfolio-info">
+							<h3>Edit Pet Service Information</h3>
+							
+							
+							<!-- <span :style="colorStyle" id="tips">{{tips}}</span> -->
+							<p></p>
+							  <div class="form-outline mb-4">
+								
+								<strong>Pet Service Name</strong>: *<input type="text" v-model="service.serviceName" class="form-control"  size="40" :placeholder="serviceInfo.serviceName"/>
+							   
+							  </div>
+							
+						   
+							
+				
+							   <!-- State input -->
+							   <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Pet Size Requirement</strong>: <input type="text" v-model="service.petSize" class="form-control" :placeholder="serviceInfo.petSize" />
+								
+							  </div>
+				
+							
+							  <!-- Post Code Detail input -->
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Price</strong>: <input type="text" v-model="price" class="form-control" :placeholder="serviceInfo.price"  />
+								
+							  </div>
+							
+							  <!-- Post Code Detail input -->
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Server Duration(Hour)</strong>: <input type="text"  v-model="duration" class="form-control" :placeholder="serviceInfo.duration" />
+								
+							  </div>
+			  
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+							 
+								<strong>Pet Service Status</strong>:  &nbsp; &nbsp;
+								<select name="cars" id="cars" v-model="selected" @change="selectStatus">
+									<!-- <select class="form-control" v-model="selected" :required @change="changeLocation"></select> -->
+									<option value="1">Reservable</option>
+									<option value="0">Disable</option>
+								
+								</select>
+								
+							  </div>
+							  <p></p><p></p>
+							  <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+				   
+								<strong>Pet Service Photo</strong>: <p></p>
+								<img :src="serviceInfo.serviceImg" alt=""><p></p>
+								<input type="file" id="file" @change="fileUpload($event)" >
+								
+							  </div>
+								<p></p>
+								<div class="form-outline mb-4"> <!--v-model: two-way bound-->
+				   
+									<strong>Pet Service Description</strong>: <p></p>
+									
+									<div id="editor—wrapper">
+										<div id="toolbar-container"><!-- 工具栏 --></div>
+										<div id="editor-container"  @input="handleInput"><!-- 编辑器 --></div>
+									</div>
+								  </div>
+								
+							  <!-- 2 column grid layout for inline styling -->
+							  <div class="row mb-4 ">
+								<!-- Submit button -->
+								<div>
+								  <button type="button"  @click="doSave" style="background-color: #F5BDBD;" class="btn btn-block mb-4 align-items-center ">Save</button>
+								</div>
+							  </div>
+							</form>
+						  </div>
+			  
+						</div>
+			  
+					  </div>
+			  
+			  
+					</div>
+				  </section><!-- End Profile Form Section -->
+	
+
+
+		  </section><!-- End Content Section -->
+		
+		</main>
+		
+	</div>
+		
+
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+ 
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
+	<script>
+		const { createEditor, createToolbar } = window.wangEditor
+		
+		const editorConfig = {
+			placeholder: '',
+			onChange(editor) {
+			  const html = editor.getHtml()
+			  console.log('editor content', html)
+			  // 也可以同步到 <textarea>
+			}
+		}
+		
+		const editor = createEditor({
+			selector: '#editor-container',
+			html: '<p><br></p>',
+			config: editorConfig,
+			mode: 'default', // or 'simple'
+		})
+		
+		const toolbarConfig = {}
+		
+		const toolbar = createToolbar({
+			editor,
+			selector: '#toolbar-container',
+			config: toolbarConfig,
+			mode: 'default', // or 'simple'
+		})
+
+	
+				
+					
+		</script>
+
+
+	
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				serviceInfo:{},
+				storeId:"",
+				userId:"",
+				serviceId:"",
+				token:"",
+				service:{
+
+					serviceId:0,
+					serviceName:"",
+					serviceImg:"",
+					petSize:"",
+					price:0.0,
+					duration:0.0,
+					serviceStatus:2,
+					serviceDesc:""
+					
+				},
+				selected:"",// option for pet service status
+				
+				price:"",
+				duration:"",
+				file:{},
+        		formData:null,
+			},
+
+			created:function(){
+				this.isLogin = true;
+				
+				this.serviceId = getUrlParam("srid");
+				
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				this.storeId =getCookies("storeId");
+				this.userId=getCookies("userId");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+				}
+
+				
+				// get single pet service
+				var Url = baseUrl+"petservice/get/"+this.serviceId
+				axios.get(Url,).then((res)=>{
+					this.serviceInfo = res.data.data;
+					this.service.serviceStatus = this.serviceInfo.serviceStatus;
+					
+				});
+			},
+			methods:{
+				
+				
+				doSave: function(){
+
+					
+					// get the price and duration
+					if(vm.price!=null && vm.price!=""){
+						console.log("enter price....")
+						vm.service.price = parseFloat(vm.price);
+					}else{
+						vm.service.price =vm.serviceInfo.price
+						console.log("check duration: ", vm.serviceInfo.price)
+					}
+
+					if(vm.duration!=null && vm.duration!="" ){
+						console.log("enter duration....")
+						vm.service.duration = parseFloat(vm.duration);
+						
+						
+					}else{
+						vm.service.duration =vm.serviceInfo.duration
+						console.log("check price: ", vm.serviceInfo.duration)
+					}
+					
+		
+					
+					var Url = baseUrl+"petservice/edit/"+vm.serviceId
+					var imageUrl = baseUrl+"petservice/imageupload"
+					vm.service.serviceId = parseInt(vm.serviceId);
+					
+					
+				
+					console.log("Input: ", vm.service)
+					
+					if(vm.formData==null || vm.formData==""){
+						// parseInt(vm.userId)
+					vm.service.serviceId = parseInt(vm.serviceId)
+						// then only send edit service request
+						axios({
+							method:"put",
+							url:Url,
+							data:vm.service,
+							
+						}).then((res)=>{ 
+							var vo = res.data;//backend return ResultVO object
+							
+							console.log("after change: ",vo);
+						
+							var loginUrl = "owner_service_view.html?sid="+vm.storeId;
+							window.location.href= encodeURI(loginUrl);
+						});
+				
+					 }else{
+
+						
+						// image upload
+						
+						axios({
+							method:"put",
+							contentType: "multipart/form-data; charset=utf-8",
+							url:imageUrl,
+							data: vm.formData
+						}).then((res)=>{
+							vm.service.serviceImg =  res.data.data;
+							
+							axios({
+								method:"put",
+								url:Url,
+								data:vm.service,
+								
+							}).then((res)=>{ 
+								var vo = res.data;//backend return ResultVO object
+								
+								console.log("after change: ",vo);
+								var loginUrl = "owner_service_view.html?sid="+vm.storeId;
+								window.location.href= encodeURI(loginUrl);
+							});
+					
+
+						})
+					}
+						
+					
+				},
+
+
+				selectStatus: function(){
+					
+					if(vm.selected=="1"){
+						vm.service.serviceStatus=1;
+					}else{
+						vm.service.serviceStatus=0;
+					}
+
+				},
+
+
+				fileUpload: function(){
+
+				if (!/image\/\w+/.test(event.target.files[0].type)) {
+				// 提示只能是图片，return
+					alert("Only Picture");
+					return;
+				} 
+					vm.file = event.target.files[0];
+					vm.formData = new FormData();
+					vm.formData.append('file', vm.file);
+					console.log("picture: ", vm.formData)
+				},
+				logoutRequest: function(){
+
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+				},
+
+				handleInput(event) {
+					vm.service.serviceDesc = event.target.innerHTML;
+
+				}
+
+			}
+		})
+
+	</script>
+</body>
+</html>

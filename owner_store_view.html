@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+	<title>PetCare Shop Admin</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+  
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="assets/css/dashbord_style.css">
+	<!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+
+</head>
+<body>
+
+	<div id="ownerBlock">
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+		
+			<span class="text">PetCare <span style="color: #f9b4b4;">Shop</span></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a :href="'dashboard.html?uid='+userId">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_store_view.html?sid='+storeId">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Pet Store</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_product_view.html?sid='+storeId">
+					<i class='bx bxs-cookie'></i>
+					<span class="text">Pet Product</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_service_view.html?sid='+storeId">
+					<i class='bx bxs-donate-heart' ></i>
+					<span class="text">Pet Service</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_reservation_view.html?sid='+storeId">
+					<i class='bx bxs-calendar' ></i>
+					<span class="text">Reserviation</span>
+				</a>
+			</li>
+
+			<li>
+				<a :href="'owner_ordering_view.html?sid='+storeId">
+					<i class='bx bxs-check-square' ></i>
+					<span class="text">Orderings</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_comment_view.html?sid='+storeId">
+					<i class='bx bxs-comment' ></i>
+					<span class="text">Comment</span>
+				</a>
+			</li>
+			<li>
+				<a :href="'owner_pet_view.html?sid='+storeId">
+					<i class='bx bxs-ghost' ></i>
+					<span class="text">Pet</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text" @click="logoutRequest">Logout</span>
+				</a>
+			</li>
+
+		</ul>
+
+
+
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+	
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a :href="'owner_notification_view.html?sid='+storeId" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">+</span>
+			</a>
+			<a href="#" class="profile">
+				<img :src="storeInfo.storeImg">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>{{storeInfo.storeName}}</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>	
+			<template v-if="isDelete">
+		
+
+<!-- MAIN -->
+		<section id="portfolio-details" class="portfolio-details">
+		
+			<div class="container" >
+	  
+			  <div class="row">
+	  
+				<div class="col-lg-3">
+				  <div class="portfolio-details-slider swiper">
+					<div class=" align-items-center">
+	  
+					  <div class="swiper-slide">
+						<img :src="storeInfo.storeImg" alt="">
+					  </div>
+	  
+					</div>
+					
+				  </div>
+				</div>
+				
+				<div class="col-lg-9">
+				  <div class="portfolio-info">
+					<h3>{{storeInfo.storeName}} Store &nbsp;&nbsp; <a :href="'owner_store_edit.html?sid='+storeId"><i class="bi bi-pencil-square"  style="color: #f9b4b4;"></i></a>   &nbsp;  &nbsp;<a href="#" style="color: #f9b4b4;" @click="doDelete"><i class="bi bi-trash3"></i></a></h3>
+					<ul>
+					  <li><strong>Store Description</strong>:&nbsp;&nbsp; &nbsp; &nbsp; {{storeInfo.storeDesc}}</li>
+					  <li><strong>Store's Province</strong>: &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  {{storeInfo.state}}</li>
+					  <li><strong>Store's City</strong>: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; {{storeInfo.city}}</li>
+					  
+					  <li><strong>Store's Detailed Address</strong>: &nbsp; &nbsp; &nbsp;{{storeInfo.address}}</li>
+	  
+					  
+					</ul>
+				  </div>
+	  
+				</div>
+	  
+			  </div>
+	  
+			  <p></p><p></p>
+			 
+			</div>
+	
+		</template>
+		<template  v-else>
+			<div class="container">
+
+				<h2 >Your store has been closed </h2>
+				<p></p>
+				<p style="color: red;">You can no longer access the system as pet store owner! You are normal user now</p>
+			</div>
+		
+		</template>
+		  </section><!-- End Profile Section -->
+	  
+
+		</main>
+		
+		
+	</section>
+	<!-- CONTENT -->
+
+
+	<footer id="footer">
+		<div class="container">
+		  <div class="copyright">
+			&copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			<!--
+			All the links in the footer should remain intact.
+			You can delete the links only if you purchased the pro version.
+			Licensing information: https://bootstrapmade.com/license/
+			Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+		  -->
+			Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+</div>
+
+
+	<script src="assets/js/dashbord_script.js"></script>
+	<script src="assets/js/vue.js"></script>
+  	<script src="assets/js/axios.js"></script>
+  	<script src="assets/js/cookie_utils.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script>
+		var baseUrl = "http://localhost:8080/";
+		var vm = new Vue({
+			el:"#ownerBlock",
+			data:{
+				isLogin: false,
+				storeInfo:{},
+				userId:"",
+				storeId:"",
+				isDelete:false,
+				token:"",
+			},
+
+			created:function(){
+				this.isLogin = true;
+				this.userId = getCookies("userId");
+				this.storeId = getCookies("storeId");
+				// fetch store information from backend
+				var Url = baseUrl+"store/query/"+this.storeId;
+				console.log("store id: ",this.storeId);
+
+				//1. check user whether login in, if not, ask login and then after back to profile/{id} page
+				this.token =getCookies("token");
+				console.log("token: ", this.token)
+				if(this.token !=null  && this.token!=""){
+					this.isLogin = true;
+				}
+				axios.get(Url,).then((res)=>{
+					this.storeInfo = res.data.data;
+					if(this.storeInfo.storeStatus == 1){
+						this.isDelete=true;
+					}
+					console.log("store info: ",this.isDelete);
+       			});
+			},
+			methods:{
+				
+				logoutRequest: function(){
+
+					// vm.isLogout = true;
+					// clear all cookies
+					deleteCookie();
+					console.log("this token: ", this.token)
+					window.location.href = "sign_in.html";
+        		},
+				doDelete: function(){
+          
+					let doDelete = confirm("Are you sure to delete? If so, your store will close, and You can no longer access the system as pet store owner! you'll back to normal user type!");
+					if(doDelete){
+						//if confirm to delete
+					
+						var deleteUrl = baseUrl+"store/delete/"+vm.storeId;
+
+						axios({
+							method:"delete",
+							url:deleteUrl,
+							data:vm.storeInfo
+						}).then((res)=>{ 
+							
+							alert(vm.vo.msg);
+							window.location.reload(); //refresh page
+							//should redirect to index.html/ or / sign_in page
+						});
+						
+					} else {
+						alert("Action canceled");
+					}
+         
+       			 }
+			}
+		})
+
+	</script>
+</body>
+</html>

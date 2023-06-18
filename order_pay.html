@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PetCare Shop</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Reveal - v4.10.0
+  * Template URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <div id ="index1">
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
+          <a :href="'notification_view.html?uid='+userId" class="notification">
+          <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
+        <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span>
+      
+        <i class="d-flex align-items-center ms-4" v-if="isLogout"><a href="#" onclick="javascript:window.location.href='sign_up.html'">Register</a></i>
+        <i class="d-flex align-items-center ms-4" v-else><a @click="logoutRequest" >Logout</a></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <a :href="'store_open.html?uid='+userId">Free Open Store</a>
+
+      </div>
+    </div>
+  </section><!-- End Top Bar-->
+  
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+      <div class="container d-flex justify-content-between">
+  
+        <div id="logo">
+          <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+        </div>
+  
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+            <li><a class="nav-link scrollto" href="petproduct.html">Pet Product</a></li>
+            <li><a class="nav-link scrollto" href="petservice.html">Pet Service</a></li>
+            <li><a class="nav-link scrollto " href="pet_onlinestore.html">Online Store</a></li>
+            <li v-if="isLogin" class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <!-- <li><a href="profile.html">Profile</a></li> -->
+                <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+                <li><a :href="'address.html?uid='+userId">Address Book</a></li>
+                <li><a :href="'my_orderings.html?uid='+userId">Ordering</a></li>
+                <li><a :href="'reservation_view.html?uid='+userId">Reservation</a></li>
+                <li><a :href="'my_comments.html?uid='+userId">Order Reviews</a></li>
+              </ul>
+            </li>
+            <li v-else></li>
+            <li><a class="nav-link scrollto" href="shopping_cart.html"><i class="bi bi-cart4 " style="font-size: 26px;"></i></a></li>
+            
+            
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+  
+      </div>
+    </header><!-- End Header -->
+  
+  <!-- ======= hero Section ======= -->
+   <!-- ======= Breadcrumbs Section ======= -->
+   
+
+
+  <main id="main" >
+  
+
+    <!-- display the pet service randomly: such as by create_time, and can reserable  -->
+
+
+      <!-- ======= Profile Details Section ======= -->
+      <section class="vh-100 gradient-custom-2">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-5">
+              <div class="card card-stepper" style="border-radius: 16px;">
+                <div class="card-header p-4">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <p class="text-muted mb-2"> Order ID <span class="fw-bold text-body">{{orderInfo.orderId}}</span></p>
+                      <p class="text-muted mb-0"> Total Price <span class="fw-bold text-body"> CNY {{orderInfo.total}}</span> </p>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div id="div1" class="card-body p-4">
+                 
+                    <div id="payQRcodeDiv" style="margin-left: 19%; width: 250px; height: 250px;">
+                      <!-- <img class="align-self-center"src="assets/img/qrcode.png" width="250"> -->
+                    
+                      <!-- Display QR Code -->
+                    </div>
+          
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+   
+  </main><!-- End #main -->
+</div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>PetCare</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+        All the links in the footer should remain intact.
+        You can delete the links only if you purchased the pro version.
+        Licensing information: https://bootstrapmade.com/license/
+        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+      -->
+        Designed by <a href="https://bootstrapmade.com/">ZHANG XIAOMENG</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <!-- Template Main JS File -->
+  
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.js"></script>
+  <script src="assets/js/cookie_utils.js"></script>
+  <script src="assets/js/util.js"></script>
+
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  <script src="assets/js/jquery.qrcode.min.js"></script>
+  <!-- <script>
+  
+
+  </script> -->
+</head>
+  <script>
+//     var TIMES = "";
+   
+//   $( function() {
+//       // $( "#datepicker" ).datepicker();
+//       $(document).ready(function(){
+//       $('.datepicker').datepicker({
+//       format: 'yyyy-MM-dd HH:mm',
+//       autoclose: true,
+//       startDate: '0d'
+//     });
+
+
+    
+//     $('.cell').click(function(){
+//       $('.cell').removeClass('select')
+//       $(this).addClass('select');
+//       TIMES=  $(this).text()
+
+//     });
+
+//   });
+ 
+  
+// } );
+
+  var baseUrl = "http://localhost:8080/";
+  var webSocketBaseUrl = "ws://localhost:8080/";
+    var vm = new Vue({
+      el:"#index1",
+      data:{
+        
+
+        username:"",
+				userimg:"",
+        userId:"",
+				isLogin:false,
+        isLogout:false,
+        orderInfo:{},
+        notification:{},
+
+      },
+      created: function(){
+    
+   
+        // get token, username from cookie
+        var token = getCookies("token");
+        this.petServiceId = getUrlParam("pid");
+        // check user if login or not
+        if(token != null && token != ""){
+          this.isLogin= true;
+          this.username = getCookies("username");
+          this.token =getCookies("token");
+          this.userId = getCookies("userId");
+          console.log(this.userId)
+      
+        }else{
+          // else token is null, means user not login
+          this.isLogout=true;
+        }
+
+       
+        // get order info from checkout.html page
+        var jsonstr = localStorage.getItem("orderInfo");
+        // get order info from checkout.html page
+        var notifi = localStorage.getItem("noti");
+       
+        if(jsonstr!=null){
+          localStorage.removeItem("orderInfo");
+          localStorage.removeItem("noti");
+        }
+        this.orderInfo = eval("("+jsonstr+")");
+        this.notification = eval("("+notifi+")");
+        console.log("notification",  this.notification);
+        console.log("order info: ", this.orderInfo)
+
+        // store the orderInfo's to cookies
+        setCookies("payUrl", this.orderInfo.payUrl);
+          
+       
+      }, 
+      mounted: function(){
+         // generate the QR code
+        
+        var str = this.orderInfo.payUrl;
+       
+        jQuery('#payQRcodeDiv').qrcode(str);
+   
+        /* once the payment done, it will return the result to user "paid successfully"
+          there are two ways:
+            1. 使用 websocket
+            2. 轮询访问是否付款
+        */
+
+        // way 1: 使用 websocket
+
+        var websocket =null;// not every browser support websocket request
+        var websocketUrl = webSocketBaseUrl+"webSocket/"+ this.orderInfo.orderId
+        websocket = new WebSocket(websocketUrl)
+        
+        websocket.onmessage = function(event){ // as long as backend using websocket send the message
+          // then the front end will receive the message
+          var msg = event.data;
+          if(msg=="1"){
+            // clear the cookies
+            setCookies("payUrl", null);
+            $("#div1").html("<p style='font-size:20px; color:green'>Paid Successfully</p>")
+
+            // send the notification to store owner
+            var urll = baseUrl+"notify/add";
+
+                axios({
+                  method:"post",
+                  url:urll,
+                  data: vm.notification
+                  
+                }).then((res)=>{ 
+                
+                  setTimeout(function(){
+                    window.location.href="my_orderings.html?uid="+vm.userId;
+                  },3000)
+
+                });
+            
+           
+          }
+        }
+
+        /* way 2: 轮询访问是否付款
+        var i = setInterval(function(){ //设置循环任务
+          var oid = vm.orderInfo.orderId;
+          console.log(oid)
+         
+          var url = baseUrl+"order/status/"+oid;
+          axios({
+            url: url,
+            method:"get",
+            headers:{
+              token: vm.token
+            }
+          }).then((res)=>{
+
+            if(res.data.data == "To Pay"){
+              // haven't paid yet
+            
+            }else if(res.data.data=="To Ship"){
+              // paid, hide the QR code, displaying the note "paid successfully"
+              $("#div1").html("<p style='font-size:20px; color:green'>Paid Successfully</p>")
+              clearInterval(i); // once paid, then stop sending request 
+            }
+          })
+        },1000) // every 1 second runs inside function
+        */
+      },
+      methods:{
+
+     
+        logoutRequest: function(){
+
+          // vm.isLogout = true;
+          // clear all cookies
+          deleteCookie();
+          console.log("this token: ", this.token)
+          window.location.href = "sign_in.html";
+        },
+
+      
+      }
+   
+    })
+    
+
+  </script>
+</body>
+
+</html>

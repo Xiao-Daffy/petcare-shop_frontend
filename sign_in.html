@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PetCare Shop Sign In</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- CSS PART -->
+  <style>
+    h4{
+      font-weight: bold;
+    }
+  </style>  
+  
+</head>
+
+<body style="background-color:#FFF6F6">
+
+  
+
+  <main id="main">
+
+    <!-- Body Section -->
+    <section class="inner-page pt-4 mt-5">
+      <div class="d-flex justify-content-center">
+        <h4>Sign In</h4>
+ 
+      </div>
+      <div class="container mx-auto h-100 d-flex justify-content-center" id="form_block">
+       
+        <form>
+          <!-- Email input -->
+         
+          <div class="form-outline mb-4">
+            <span :style="colorStyle" id="tips">{{tips}}</span>
+            <input type="email" v-model="email"  class="form-control"  size="40" placeholder="Email" @keyup="checkInfo"/>
+           
+          </div>
+        
+          <!-- Password input -->
+          <div class="form-outline mb-4"> <!--v-model: two-way bound-->
+         
+            <input type="password" v-model="password" class="form-control" placeholder="Password" @keyup="checkInfo"/>
+            
+          </div>
+        
+          <!-- 2 column grid layout for inline styling -->
+          <div class="row mb-4">
+            <!--
+            <div class="col d-flex justify-content-center">
+  
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                <label class="form-check-label" for="form2Example31"> Remember me </label>
+              </div>
+            </div>
+            -->
+            <div class="col">
+              <!-- Simple link -->
+              <a href="#!" onclick="javascript:window.location.href='forget_password.html'">Forgot password?</a>
+            </div>
+          </div>
+        
+          <!-- Submit button -->
+          <div class="row mb-4">
+          <button type="button" @click="doSubmit" style="background-color: #F5BDBD;" class="btn btn-block mb-4">Sign In</button>
+          </div>
+        </form>
+    </div>
+     <!-- Register buttons -->
+     <div class="text-center">
+      <p>Not a member? <a href="#!" onclick="javascript:window.location.href='sign_up.html'">Sign Up</a></p>
+      
+    </div>
+  
+    <center><img src="assets/img/footprint.png"></center>
+    </section>
+  
+    <!-- Body Section -->
+    
+  </main><!-- End #main -->
+
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/js/jquery-3.6.4.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/axios.js"></script>
+  <script src="assets/js/cookie_utils.js"></script>
+  
+  <!-- Start Using Vuejs -->
+  <script>
+
+    var baseUrl = "http://localhost:8080/";
+    var vm = new Vue({
+      el: "#form_block",
+      //define the input box values
+      data:{
+        email:"",
+       
+        password:"",
+        tips:"",
+        colorStyle:"",
+        isRight: false, // it's for email/password check, only when email/password fullfil the format, then turn to be true
+      },
+      methods:{ // put all functions in the block
+        doSubmit:function(){
+
+          // 1. check format of input box values: email & password
+            if(vm.isRight){
+              // if enter email and password with correct format
+              console.log("okay..........")
+             
+              // 2. send ajax(axios) request  
+              var loginUrl = baseUrl+"user/login";
+              axios.get(loginUrl, {
+                // fecth input values email & password
+                // and sent to backend
+                // http://localhost:8080/user/login?email=xxx&password=xx
+                params:{
+                  email: vm.email,
+                  password:vm.password 
+                }
+              }).then((res)=>{
+
+                //get the ResultVO from backend
+                var vo = res.data;
+                console.log(vo);
+                // var users = vo.data;
+                // get the JWT(JSON Web Token) token, and save to Cookie
+               
+                setCookies("token", vo.msg);
+                // save user username and user id to cookies,
+                setCookies("username", vo.data.username);
+                setCookies("userId", vo.data.userId);
+                
+                if(vo.code == 10000){
+                  // console.log("user: ", users);
+                  if(vo.data.userType == "user"){
+                    window.location.href = "index.html";
+                  }else{
+                    window.location.href = "dashboard.html?uid="+vo.data.userId;
+                  }
+                }else{
+                  // user failed to login, display the message for the failure
+                  vm.tips = "Email or password not correct!";
+                  vm.colorStyle="color:red";
+                }
+              })
+
+            }else{
+             
+              // else enter nothing
+              vm.tips="Please enter email and password!";
+              vm.colorStyle="color:red";
+
+            }
+          
+        },
+        // input validation
+        checkInfo:function(){
+
+          if(vm.email == ""){ 
+            vm.tips="Please enter email!";
+            vm.colorStyle="color:red";
+            vm.isRight = false;
+          }else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))){ 
+            // if email doesn't fullfil xxx@xxx.xxx
+            vm.tips="Please enter a valid email";
+            vm.colorStyle="color:red";
+            vm.isRight = false;
+          }else{
+            // email is valid, then check password
+        
+						if(vm.password == ""){
+							vm.tips = "Please enter password！";
+              vm.colorStyle="color:red";
+							vm.isRight = false;
+						}else if(vm.password.length<6 || vm.password.length>16){
+							vm.tips = "Password must within 6 to 16 characters！";
+              vm.colorStyle="color:red";
+							vm.isRight = false;
+						}else{
+							vm.tips ="";
+							vm.isRight = true;
+						}
+          
+          }
+          
+        },
+
+     
+       
+      }
+    })
+   
+  </script>
+</body>
+
+</html>
