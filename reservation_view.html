@@ -149,7 +149,7 @@
           </div>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row" data-aos="fade-up" data-aos-delay="200">
 
           <!-- Filter 1  Pending-->
          <template  v-for="re, index in reservationList"  v-if="re.reserveStatus == 'Pending'">
@@ -321,7 +321,8 @@
   <!-- Template Main JS File -->
   
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/vue.js"></script>
+  <!-- <script src="assets/js/vue.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
   <script src="assets/js/axios.js"></script>
   <script src="assets/js/cookie_utils.js"></script>
   <script src="assets/js/util.js"></script>
@@ -358,7 +359,7 @@
   
 } );
 
-  var baseUrl = "http://localhost:8080/";
+  var baseUrl = "https://app-petcare-test.azurewebsites.net/";
     var vm = new Vue({
       el:"#index1",
       data:{

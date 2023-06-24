@@ -40,56 +40,59 @@
   <div id="block">
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
-    <div class="contact-info d-flex align-items-center">
-      <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
-        <a :href="'notification_view.html?uid='+userId" class="notification">
-        <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
-        <!-- <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span> -->
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <span style="font-weight: bold;" class="d-flex align-items-center" v-if="isLogin">
+          <a :href="'notification_view.html?uid='+userId" class="notification">
+          <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
+        <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span>
       
-       
-        <i class="d-flex align-items-center ms-4"><a  @click="logoutRequest"  >Logout</a></i>
+        <i class="d-flex align-items-center ms-4" v-if="isLogout"><a href="#" onclick="javascript:window.location.href='sign_up.html'">Register</a></i>
+        <i class="d-flex align-items-center ms-4" v-else><a @click="logoutRequest" >Logout</a></i>
       </div>
       <div class="social-links d-none d-md-flex align-items-center">
-    
+        <a :href="'store_open.html?uid='+userId">Free Open Store</a>
 
       </div>
     </div>
   </section><!-- End Top Bar-->
+  
   <!-- ======= Header ======= -->
- <!-- ======= Header ======= -->
- <header id="header" class="d-flex align-items-center">
-  <div class="container d-flex justify-content-between">
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
 
-    <div id="logo">
-      <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      <div id="logo">
+        <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto" href="petproduct.html">Pet Product</a></li>
+          <li><a class="nav-link scrollto" href="petservice.html">Pet Service</a></li>
+          <li><a class="nav-link scrollto " href="pet_onlinestore.html">Online Store</a></li>
+          <li v-if="isLogin" class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!-- <li><a href="profile.html">Profile</a></li> -->
+              <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+              <li><a :href="'address.html?uid='+userId">Address Book</a></li>
+              <li><a :href="'my_orderings.html?uid='+userId">Ordering</a></li>
+              <li><a :href="'reservation_view.html?uid='+userId">Reservation</a></li>
+              <li><a :href="'my_comments.html?uid='+userId">Order Reviews</a></li>
+            </ul>
+          </li>
+          <li v-else></li>
+          <li><a class="nav-link scrollto" href="shopping_cart.html"><i class="bi bi-cart4 " style="font-size: 26px;"></i></a></li>
+          
+          
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
     </div>
-
-    <nav id="navbar" class="navbar">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-        <li><a class="nav-link scrollto" href="#about">Pet Product</a></li>
-        <li><a class="nav-link scrollto" href="#services">Pet Service</a></li>
-        <li><a class="nav-link scrollto " href="#portfolio">Online Store</a></li>
-        <li class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a :href="'profile.html?uid='+userId">Profile</a></li>
-            <li><a href="#">Address Book</a></li>
-            <li><a href="#">Ordering</a></li>
-            <li><a href="#">Reservation</a></li>
-            
-          </ul>
-        </li>
-        <li><a class="nav-link scrollto" href="#team"><i class="bi bi-cart4 " style="font-size: 25px;"></i></a></li>
-        
-        
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav><!-- .navbar -->
-
-  </div>
-</header><!-- End Header -->
+  </header><!-- End Header -->
   <main id="main">
 
     <!-- ======= Breadcrumbs Section ======= -->
@@ -225,7 +228,7 @@
   <script src="assets/js/util.js"></script>
 
   <script>
-    var baseUrl = "http://localhost:8080/";
+    var baseUrl = "https://app-petcare-test.azurewebsites.net/";
      
  
     var vm = new Vue({
@@ -233,6 +236,7 @@
       el: "#block",
       data:{
         aid:"",
+        isLogin:false,
         addre:{
           addrId:0,
           receiverName:"",
@@ -244,21 +248,30 @@
           defaultAddr: 0,
         },
         token:"",
+        isLogout:false,
         addrInfo:{},
         setDefault:false,
         selected: false,
         userId:"",
         username:"",
         isRight:false,
+        tips:"",
+        colorStyle:""
       }, 
       created: function(){
         this.userId = getCookies("userId");
         this.username =getCookies("username");
         this.aid = getUrlParam("aid");
+        this.token =getCookies("token");
+        console.log("token: ", this.token)
+        if(this.token !=null  && this.token!=""){
+          this.isLogin = true;
+        }
         console.log(this.aid);
         var addrUrl = baseUrl+"user/address/get/"+this.aid;
         axios.get(addrUrl,).then((res)=>{
           this.addrInfo = res.data.data;
+          console.log("address info: ", this.addrInfo)
           if(this.addrInfo.defaultAddr == 1){
             this.selected = true;
           }
@@ -268,44 +281,48 @@
       methods:{
         
         doSave: function(){
-          if(vm.isRight){
+          if(vm.setDefault == true){
+              vm.addre.defaultAddr = 1;
+            }
+            
             vm.addre.addrId = parseInt(vm.aid);
+            vm.addre.userId = parseInt(vm.userId)
+            console.log("addres: ", vm.addre)
             // update
             // /address/edit/{aid}
-            var resetUrl = baseUrl+"user/address/edit/"+vm.aid;
+            var resetUrl = baseUrl+"user/address/edit/"+vm.addre.addrId;
               axios({
               method:"put",
               url:resetUrl,
               data:vm.addre
             }).then((res)=>{ 
-              
-    
-              //"'address.html?uid='+userId"
+              console.log("addres: ", res.data.msg)
+           
               var backUrl = "address.html?uid="+vm.userId;
               window.location.href= encodeURI(backUrl);
             });
-          }
+          
         },
 
         // input validation
           // input validation
           checkInfo: function(){
           
-          if(/[0-9]/.test(vm.addre.state)){
-            vm.tips="Province contains only letters!";
-            vm.colorStyle="color:red";
-						vm.isRight = false;
-          }else if(/[0-9]/.test(vm.addre.city)){
-            vm.tips="City contains only letters!";
-            vm.colorStyle="color:red";
-						vm.isRight = false;
-          }else if(vm.addre.postCode.length !=6 && vm.addre.postCode.length !=5 ){
-            vm.tips="Post code only with length 5 or 6";
-            vm.colorStyle="color:red";
-						vm.isRight = false;
-          }else{
-            vm.isRight=true;
-          }
+          // if(/[0-9]/.test(vm.addre.state)){
+          //   vm.tips="Province contains only letters!";
+          //   vm.colorStyle="color:red";
+					// 	vm.isRight = false;
+          // }else if(/[0-9]/.test(vm.addre.city)){
+          //   vm.tips="City contains only letters!";
+          //   vm.colorStyle="color:red";
+					// 	vm.isRight = false;
+          // }else if(vm.addre.postCode.length !=6 && vm.addre.postCode.length !=5 ){
+          //   vm.tips="Post code only with length 5 or 6";
+          //   vm.colorStyle="color:red";
+					// 	vm.isRight = false;
+          // }else{
+          //   vm.isRight=true;
+          // }
         },
         logoutRequest: function(){
 

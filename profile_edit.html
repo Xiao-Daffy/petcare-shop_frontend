@@ -246,7 +246,7 @@
   <script src="assets/js/util.js"></script>
 
   <script>
-    var baseUrl = "http://localhost:8080/";
+    var baseUrl = "https://app-petcare-test.azurewebsites.net/";
 
     var vm = new Vue({
       el:"#profileBlock",
@@ -306,23 +306,12 @@
         // save the changed profile
         doSave: function(){
           vm.isRight=true;
-          if(vm.isRight){ // if input all validated
-            console.log("check.............")
+
             var resetUrl = baseUrl+"user/edit/"+vm.userId;
-            var imageUrl = baseUrl+"user/azureupload";
+            var imageUrl = baseUrl+"user/imageupload";
+          if(vm.formData==null || vm.formData==""){
 
-            // image upload
-
-            axios({
-            method:"put",
-            contentType: "multipart/form-data; charset=utf-8",
-            url:imageUrl,
-            data: vm.formData
-          }).then((res)=>{
-            
-            // get the img url, and store into database
-            vm.user.userImg =  res.data.data;
-            console.log("img url: ", res.data.data[0])
+            // then just upload user info
             axios({
               method:"put",
               url:resetUrl,
@@ -335,9 +324,38 @@
               window.location.href= encodeURI(loginUrl);
             });
 
-          })
+          }else{
+     // image upload
 
+              axios({
+                method:"put",
+                contentType: "multipart/form-data; charset=utf-8",
+                url:imageUrl,
+                data: vm.formData
+              }).then((res)=>{
+                
+                // get the img url, and store into database
+                vm.user.userImg =  res.data.data;
+                console.log("img url: ", res.data.data[0])
+                axios({
+                  method:"put",
+                  url:resetUrl,
+                  data:vm.user
+                }).then((res)=>{ 
+                  var vo = res.data;//backend return ResultVO object
+                  console.log(vm.user.password);
+                  console.log("after change: ",vo);
+                  var loginUrl = "profile.html?uid="+vm.userId;
+                  window.location.href= encodeURI(loginUrl);
+                });
+
+              })
+
+          
           }
+
+        
+       
         },
         fileUpload: function(){
 

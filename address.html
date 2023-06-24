@@ -46,51 +46,53 @@
           <i class='bx bxs-bell' style="font-size: 18px;" ></i></a> &nbsp;Hello, {{username}}</span>
         <span class="d-flex align-items-center" v-else ><a href="#" onclick="javascript:window.location.href='sign_in.html'">Hey, Please Login</a></span>
       
-       
-        <i class="d-flex align-items-center ms-4"><a  @click="logoutRequest"  >Logout</a></i>
+        <i class="d-flex align-items-center ms-4" v-if="isLogout"><a href="#" onclick="javascript:window.location.href='sign_up.html'">Register</a></i>
+        <i class="d-flex align-items-center ms-4" v-else><a @click="logoutRequest" >Logout</a></i>
       </div>
       <div class="social-links d-none d-md-flex align-items-center">
-
+        <a :href="'store_open.html?uid='+userId">Free Open Store</a>
 
       </div>
     </div>
   </section><!-- End Top Bar-->
-
+  
   <!-- ======= Header ======= -->
- <!-- ======= Header ======= -->
- <header id="header" class="d-flex align-items-center">
-  <div class="container d-flex justify-content-between">
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
 
-    <div id="logo">
-      <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      <div id="logo">
+        <h1><a href="index.html">PetCare <span>Shop</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+          <li><a class="nav-link scrollto" href="petproduct.html">Pet Product</a></li>
+          <li><a class="nav-link scrollto" href="petservice.html">Pet Service</a></li>
+          <li><a class="nav-link scrollto " href="pet_onlinestore.html">Online Store</a></li>
+          <li v-if="isLogin" class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <!-- <li><a href="profile.html">Profile</a></li> -->
+              <li><a :href="'profile.html?uid='+userId">Profile</a></li>
+              <li><a :href="'address.html?uid='+userId">Address Book</a></li>
+              <li><a :href="'my_orderings.html?uid='+userId">Ordering</a></li>
+              <li><a :href="'reservation_view.html?uid='+userId">Reservation</a></li>
+              <li><a :href="'my_comments.html?uid='+userId">Order Reviews</a></li>
+            </ul>
+          </li>
+          <li v-else></li>
+          <li><a class="nav-link scrollto" href="shopping_cart.html"><i class="bi bi-cart4 " style="font-size: 26px;"></i></a></li>
+          
+          
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
     </div>
+  </header><!-- End Header -->
 
-    <nav id="navbar" class="navbar">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-        <li><a class="nav-link scrollto" href="#about">Pet Product</a></li>
-        <li><a class="nav-link scrollto" href="#services">Pet Service</a></li>
-        <li><a class="nav-link scrollto " href="#portfolio">Online Store</a></li>
-        <li class="dropdown"><a href="#"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a :href="'profile.html?uid='+userId">Profile</a></li>
-            <li><a href="#">Address Book</a></li>
-            <li><a href="#">Ordering</a></li>
-            <li><a href="#">Reservation</a></li>
-            
-          </ul>
-        </li>
-        <li><a class="nav-link scrollto" href="#team"><i class="bi bi-cart4 " style="font-size: 25px;"></i></a></li>
-        
-        
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav><!-- .navbar -->
-
-  </div>
-</header><!-- End Header -->
   <main id="main">
 
     <!-- ======= Breadcrumbs Section ======= -->
@@ -201,7 +203,7 @@
 
   <script>
 
-    var baseUrl ="http://localhost:8080/";
+    var baseUrl ="https://app-petcare-test.azurewebsites.net/";
     var vm = new Vue({
       el:"#addressBlock",
       data:{
@@ -213,6 +215,7 @@
 				isLogin:false,
         adressList:[],
         token:"",
+        isLogout: false
       },
       created: function(){
         // get token, username from cookie

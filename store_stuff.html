@@ -163,7 +163,7 @@
           </div>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row" data-aos="fade-up" data-aos-delay="200">
 
           <!-- New Product -->
        
@@ -171,7 +171,7 @@
           <template v-for="np, index in ProductList">
            <div class="col-lg-4 col-md-4 portfolio-item" >
             <img :src="np.mainImg" class="img-fluid" width="98%" height="98%" alt="">
-            <div class="portfolio-info">
+            <div class="portfolio-info col-lg-4 col-md-4 ">
               <h4>{{np.productName}}</h4>
               <p style="font-size: 16px;"><i class="bi bi-currency-yen"></i> {{np.salePrice}}</p>
               <a  data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"  @click="AddtoCart(np.productId, np.storeId)"><span style="color: green; font-size: 14px;">{{tips}}</span>&nbsp;&nbsp;&nbsp; <i class="bx  bx-cart"></i></a>
@@ -235,7 +235,8 @@
   <!-- Template Main JS File -->
   
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/vue.js"></script>
+  <!-- <script src="assets/js/vue.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
   <script src="assets/js/axios.js"></script>
   <script src="assets/js/cookie_utils.js"></script>
   <script src="assets/js/util.js"></script>
@@ -260,7 +261,7 @@
 		}
 	</script>
   <script>
-    var baseUrl = "http://localhost:8080/";
+    var baseUrl = "https://app-petcare-test.azurewebsites.net/";
     var vm = new Vue({
       el:"#index1",
       data:{

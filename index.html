@@ -130,7 +130,7 @@
           </div>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row" data-aos="fade-up" data-aos-delay="200">
 
           <!-- New Product -->
        
@@ -138,8 +138,8 @@
           <template v-for="np, index in newProductList">
            <div class="col-lg-4 col-md-4 portfolio-item" >
             <img :src="np.mainImg" class="img-fluid" width="98%" height="98%" alt="">
-            <div class="portfolio-info">
-              <h4>{{np.mainImg}}</h4>
+            <div class="portfolio-info col-lg-4 col-md-4 "  >
+              <h4>{{np.productName}}</h4><br>
               <p style="font-size: 16px;"><i class="bi bi-currency-yen"></i> {{np.salePrice}}</p>
               <a  data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"  @click="AddtoCart(np.productId, np.storeId)"><span style="color: green; font-size: 14px;">{{tips}}</span>&nbsp;&nbsp;&nbsp; <i class="bx  bx-cart"></i></a>
               <a :href="'product_detail.html?pid='+np.productId" class="details-link" title="More Details"><i class="bx bx-pointer"></i></a>
@@ -154,7 +154,7 @@
             <div class="col-lg-4 col-md-4 portfolio-item" >
              <img :src="rp.productImg" class="img-fluid" width="98%" height="98%" alt="">
              <div class="portfolio-info">
-               <h4>{{rp.productName}}</h4>
+               <h4>{{rp.productName}}</h4><br>
                <p style="font-size: 16px;"><i class="bi bi-currency-yen"></i> {{rp.productPrice}}</p>
                <a  data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"  @click="AddtoCart(np.productId, np.storeId)"><span style="color: green; font-size: 14px;">{{tips}}</span>&nbsp;&nbsp;&nbsp; <i class="bx  bx-cart"></i></a>
                <a :href="'product_detail.html?pid='+rp.productId" class="details-link" title="More Details"><i class="bx bx-pointer"></i></a>
@@ -284,7 +284,9 @@
 		}
 	</script>
   <script>
-    var baseUrl = "http://localhost:8080/";
+    // var baseUrl = "https://app-petcare-test.azurewebsites.net/";
+    var baseUrl = "https://app-petcare-test.azurewebsites.net/";
+
     var vm = new Vue({
       el:"#index1",
       data:{

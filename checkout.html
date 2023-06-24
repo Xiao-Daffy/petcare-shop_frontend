@@ -130,10 +130,12 @@
       <div class="row gy-4 m-2">
         <div class="row">
         <template v-for="addr, index in adressList">
+        
           <div class="col-md-4" v-if="addr.defaultAddr==1">
+           
             <div style="width: 100%;" class="portfolio-info">
                   <span style="font-weight: bold; font-size: 14px;">
-                      {{addr.receiverName}} {{addr.receiverMobile}} &nbsp; <span style="font-size: 10px; color:rgb(87, 87, 87); background-color: rgb(232, 232, 232);">default</span>  &nbsp; <a href="'address_edit.html?aid='+addr.addrId"><span style="font-size: 18px;"><i class="bi bi-pencil"></i></span></a>  
+                      {{addr.receiverName}} {{addr.receiverMobile}} &nbsp; <span style="font-size: 10px; color:rgb(87, 87, 87); background-color: rgb(232, 232, 232);">default</span>  &nbsp; <a :href="'address_edit.html?aid='+addr.addrId"><span style="font-size: 18px;"><i class="bi bi-pencil"></i></span></a>  
                   </span><br>
                   <span  style="width: 100%;"> 
                     {{addr.address}}, {{addr.city}}, {{addr.state}}, {{addr.postCode}}
@@ -311,7 +313,7 @@
   <script src="assets/js/util.js"></script>
 
   <script>
- var baseUrl = "http://localhost:8080/";
+ var baseUrl = "https://app-petcare-test.azurewebsites.net/";
     var vm = new Vue({
       el:"#index1",
       data:{
@@ -323,6 +325,7 @@
         totalPrice:0.00,
 				isLogin:false,
         isLogout:false,
+
         cartList:[],
         adressList:[],
         isAddCart: false, // true: added , false: not yet
@@ -373,9 +376,10 @@
 
             this.adressList = res.data.data;
         
-            console.log(this.adressList);
+           
             
-        
+
+              console.log("address, ",this.adressList);
           });
         
 

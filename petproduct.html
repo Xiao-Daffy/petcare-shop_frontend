@@ -124,7 +124,7 @@
           <p>Below is the list of pet product from variety store</p>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row" data-aos="fade-up" data-aos-delay="200">
         
           <!-- Filter 1 -->
         <template  v-for="ps, index in petProductList">
@@ -140,9 +140,9 @@
 
       
             
-            <div class="portfolio-info">
+            <div class="portfolio-info col-lg-4 col-md-6">
               
-              <h4>{{ps.productName}}</h4>
+              <h4>{{ps.productName}}</h4><br>
               <h5 class="img-fluid"><span class="badge bg-light pt-2 ms-3 mt-3 text-dark"> CNY&nbsp; {{ps.salePrice}}</span></h5>
               <p style="font-size: 15px;"><i class="bx bx-store"></i>&nbsp; {{ps.storeName}}</p> <!--store name-->
               
@@ -199,7 +199,9 @@
   <script src="assets/js/cookie_utils.js"></script>
 
   <script>
- var baseUrl = "http://localhost:8080/";
+//  var baseUrl = "https://app-petcare-test.azurewebsites.net/";
+var baseUrl = "https://app-petcare-test.azurewebsites.net/";
+
     var vm = new Vue({
       el:"#index1",
       data:{
